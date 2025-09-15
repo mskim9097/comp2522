@@ -1,8 +1,32 @@
 package ca.bcit.comp2522.bank;
 
-public class Main {
+/**
+ * Creating a driver class to test the program(runningName,Date,BankClient,BankAccount class).
+ *
+ * @author Minsu
+ * @author Hali
+ * @author Esin
+ * @version 1.0
+ */
+public class Main
+{
 
-    public static void main(final String[] args) {
+    /**
+     * Main entry point of the program.
+     * Firstly, it creates four {@link Name} objects for Albert Einstein,
+     * Nelson Mandela, Frida Kahlo, and Jackie Chan.
+     * Secondly, it uses those names to create four {@link BankClient}
+     * objects with their birth dates, death dates (if any), signup dates,
+     * and client IDs.
+     * Thirdly, it creates four {@link BankAccount} objects for those clients,
+     * giving each account a starting balance, a PIN, and an account number,
+     * as well as the open date and (if applicable) close date.
+     * Finally, the objects are ready to be used in further program logic.
+     *
+     * @param args command line arguments (not used in this program)
+     */
+    public static void main(final String[] args)
+    {
 
         final Name n1;
         final Name n2;
@@ -92,9 +116,31 @@ public class Main {
         System.out.println(n1.getReverseName());
         System.out.println(c1.getDetails());
         System.out.println(b1.getDetails());
-        b1.withdraw(100, 3141);
-        System.out.println(b1.getDetails());
-        b1.deposit(1000);
-        System.out.println(b1.getBalanceUsd());
+        b1.withdraw(100);
+        System.out.println(b1.getDetails() + "\n");
+
+        System.out.println(n2.getInitials());
+        System.out.println(n2.getFullName());
+        System.out.println(n2.getReverseName());
+        System.out.println(c2.getDetails());
+        System.out.println(b2.getDetails());
+        b2.withdraw(200, 4664);
+        System.out.println(b2.getDetails() + "\n");
+
+        System.out.println(n3.getInitials());
+        System.out.println(n3.getFullName());
+        System.out.println(n3.getReverseName());
+        System.out.println(c3.getDetails());
+        System.out.println(b3.getDetails());
+        b3.withdraw(50, 1907);
+        System.out.println(b3.getDetails() + "\n");
+
+        System.out.println(n4.getInitials());
+        System.out.println(n4.getFullName());
+        System.out.println(n4.getReverseName());
+        System.out.println(c4.getDetails());
+        System.out.println(b4.getDetails());
+        b4.withdraw(500);
+        System.out.println(b4.getDetails());
     }
 }

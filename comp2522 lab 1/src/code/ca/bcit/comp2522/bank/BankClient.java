@@ -1,6 +1,24 @@
 package ca.bcit.comp2522.bank;
 
-public class BankClient {
+/**
+ * Represents a bank client and their personal details.
+ * Firstly, it keeps the client's name.
+ * Secondly, it stores the birthdate.
+ * Thirdly, it may hold the death date (if the client has passed away).
+ * Fourthly, it records the signup date when the client joined the bank.
+ * Finally, it saves the unique client ID, which must be between
+ * 6 and 7 characters long.
+ *
+ *
+ * @author Minsu
+ * @author Hali
+ * @author Esin
+ * @version 1.0
+ */
+public class BankClient
+{
+    private static final int MAX_CLIENT_ID_LENGTH = 7;
+    private static final int MIN_CLIENT_ID_LENGTH = 6;
 
     private final Name name;
     private final Date birthDate;
@@ -8,66 +26,123 @@ public class BankClient {
     private final Date signupDate;
     private final String clientID;
 
+    /**
+     * Creates a new BankClient with the given personal information.
+     *
+     * @param name       the full name of the client
+     * @param birthDate  the client's date of birth
+     * @param deathDate  the client's date of death (null if still alive)
+     * @param signupDate the date when the client signed up
+     * @param clientID   a unique ID that identifies the client
+     */
     public BankClient(final Name name,
                       final Date birthDate,
                       final Date deathDate,
                       final Date signupDate,
-                      final String clientID) {
-        if (name == null
-            || birthDate == null
-            || signupDate == null
-            || clientID == null
-            || clientID.length() < 6
-            || clientID.length() > 7) {
-            throw new IllegalArgumentException("Invalid client");
-        }
+                      final String clientID)
+    {
+        validateBirthDate(birthDate);
+        validateClientID(clientID);
+
         this.name = name;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
         this.signupDate = signupDate;
         this.clientID = clientID;
     }
-    public Name getName() {
+
+    /**
+     * Gets the name of the client.
+     *
+     * @return name of the client.
+     */
+    public Name getName()
+    {
         return name;
     }
 
-    public Date getBirthDate() {
+    /**
+     * Creating a getter to get the birthDate of the client.
+     *
+     * @return birthDate of the client.
+     */
+    public Date getBirthDate()
+    {
         return birthDate;
     }
 
-    public Date getDeathDate() {
+    /**
+     * Creating getter to get the deathDate of the client.
+     *
+     * @return deathDate of the client.
+     */
+    public Date getDeathDate()
+    {
         return deathDate;
     }
 
-    public Date getSignupDate() {
+    /**
+     * Creating getter to get the signupDate of the client.
+     *
+     * @return signupDate of the client.
+     */
+    public Date getSignupDate()
+    {
         return signupDate;
     }
 
-    public String getClientID() {
+    /**
+     * Creating getter to get the clientID of the client.
+     *
+     * @return clientID of the client.
+     */
+    public String getClientID()
+    {
         return clientID;
     }
 
-    public String getDetails() {
-        if (isAlive()) {
-            return name.getFullName()
-                    + " client #"
-                    + clientID
-                    + " (alive) joined the bank on "
-                    + signupDate.getYyyyMmDd()
-                    + "!";
-        } else {
-            return name.getFullName()
-                    + " (died "
-                    + deathDate.getYyyyMmDd()
-                    + ") was born on "
-                    + birthDate.getYyyyMmDd()
-                    + "!";
-        }
+    /**
+     * Creating a getter to get the details of the client.
+     *
+     * @return details of the client.
+     */
+    public String getDetails()
+    {
+        return name.getFullName()
+                + " client #"
+                + clientID
+                + " ("
+                + (isAlive() ? "alive" : "not alive")
+                + ") joined the bank on "
+                + signupDate.getDayOfTheWeek()
+                + ", "
+                + Date.MONTH_NAMES[signupDate.getMonth() - 1]
+                + " "
+                + signupDate.getDay()
+                + ", "
+                + signupDate.getYear();
     }
 
-    public boolean isAlive() {
+    private boolean isAlive()
+    {
         return deathDate == null;
     }
 
+    private static void validateBirthDate(final Date birthDate)
+    {
+        if (birthDate == null) {
+            throw new IllegalArgumentException("Invalid birth date");
+        }
+    }
+
+    private static void validateClientID(final String clientID)
+    {
+        if (clientID == null
+                || clientID.trim().isBlank()
+                || clientID.length() < MIN_CLIENT_ID_LENGTH
+                || clientID.length() > MAX_CLIENT_ID_LENGTH) {
+            throw new IllegalArgumentException("Invalid client ID");
+        }
+    }
 
 }

@@ -1,9 +1,15 @@
 package ca.bcit.comp2522.bank;
 
 /**
- * Models a name for a bank client.
+ * This class combines a Name with a first and last name.
+ * Firstly, this class provides functionality to retrieve initials, full name, and reverse.
+ * Secondly, validating the name if we have corrected the letter size of the name.
+ * Also, it checks to make sure that
+ * nobody accesses in the program as admin by typing "admin"
  *
- * @author Minsu Kim
+ * @author Minsu
+ * @author Hali
+ * @author Esin
  * @version 1.0
  */
 public class Name
@@ -15,11 +21,13 @@ public class Name
     private final String last;
 
     /**
-     * Constructor.
-     * @param first first name of the client.
-     * @param last last name of the client.
+     * Creates a new Name with a first name and a last name.
+     * Firstly, it validates the given first name.
+     * Secondly, it validates the given last name.
+     * Finally, it assigns the values to the fields.
      *
-     * @throws IllegalArgumentException if the name is invalid.
+     * @param first the client's first name
+     * @param last  the client's last name
      */
     public Name(final String first,
                 final String last)
@@ -32,7 +40,8 @@ public class Name
     }
 
     /**
-     * Gets the first name.
+     * Getter that returns the first name.
+     *
      * @return first name.
      */
     public String getFirst()
@@ -41,8 +50,9 @@ public class Name
     }
 
     /**
-     * Gets the last name.
-     * @return last name.
+     * Getter that returns the last name.
+     *
+     * @return the last name.
      */
     public String getLast()
     {
@@ -50,19 +60,24 @@ public class Name
     }
 
     /**
-     * Gets the initials of the name.
-     * @return initials of the name.
+     * Creating a method that returns the initials of the first and last name in uppercase.
+     *
+     * @return the initials in the format "F.L."
      */
     public String getInitials()
     {
         return first.trim().substring(0, 1).toUpperCase()
-                + "." + last.trim().substring(0, 1).toUpperCase()
+                + "."
+                + last.trim().substring(0, 1).toUpperCase()
                 + ".";
     }
 
     /**
-     * Gets the full name of the client.
-     * @return full name of the client.
+     * Creating a method that returns the full name in uppercase
+     * for the first letter of first name and last name,
+     * and rest letters in lowercase.
+     *
+     * @return the full name
      */
     public String getFullName()
     {
@@ -74,22 +89,16 @@ public class Name
     }
 
     /**
-     * Gets the reverse name of the client.
-     * @return reverse the name of the client.
+     * Prints the reverse of the full name.
+     *
+     * @return reverse full name
      */
     public String getReverseName()
     {
-        StringBuilder reverseName = new StringBuilder();
-        for (int i = last.length() - 1; i >= 0; i--)
-        {
-            reverseName.append(last.charAt(i));
-        }
-        reverseName.append(" ");
-        for (int i = first.length() - 1; i >= 0; i--)
-        {
-            reverseName.append(first.charAt(i));
-        }
-        return reverseName.toString();
+        String combined = getFirst()
+                + " "
+                + getLast();
+        return new StringBuilder(combined).reverse().toString();
     }
 
     private static void validateFirstName(final String first)
