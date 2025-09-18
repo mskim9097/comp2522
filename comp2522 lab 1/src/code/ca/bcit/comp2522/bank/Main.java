@@ -1,11 +1,11 @@
 package ca.bcit.comp2522.bank;
 
 /**
- * Creating a driver class to test the program(runningName,Date,BankClient,BankAccount class).
+ * Creating a driver class to test the program(runningName, Date, BankClient, BankAccount class).
  *
- * @author Minsu
- * @author Hali
- * @author Esin
+ * @author Minsu Kim
+ * @author Hali Imanpanah
+ * @author Esin Sahutoglu
  * @version 1.0
  */
 public class Main

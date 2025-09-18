@@ -9,26 +9,25 @@ public class Main
 
         try
         {
-            a1 = new Dog(2026, "rocky");
+            a1 = new Dog(2020, "rocky");
 
-            a2 = new Dolphin(2019);
+            a2 = new Dolphin(2000);
 
-            a1.speak();
-            a2.speak();
+            a1.speak(); // woof
+            a2.speak(); // eeee ee
 
             System.out.println(a1.getClass().getSimpleName());
+            return;
         }
-        catch (final IOException e)
+        catch (final IllegalDogBirthYearException e)
         {
-            System.out.println("IOException");
-            System.out.println("catch");
+            System.out.println(e.getMessage());
+            System.out.println(":(");
         }
         finally
         {
-            System.out.println("finally");
+            System.out.println("THE END BYE");
         }
-
-
 
 //        if(a1 instanceof Dog)
 //        {

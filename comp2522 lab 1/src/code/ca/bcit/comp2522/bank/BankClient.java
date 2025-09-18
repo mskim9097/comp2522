@@ -10,16 +10,16 @@ package ca.bcit.comp2522.bank;
  * 6 and 7 characters long.
  *
  *
- * @author Minsu
- * @author Hali
- * @author Esin
+ * @author Minsu Kim
+ * @author Hali Imanpanah
+ * @author Esin Sahutoglu
  * @version 1.0
  */
 public class BankClient
 {
     private static final int MAX_CLIENT_ID_LENGTH = 7;
     private static final int MIN_CLIENT_ID_LENGTH = 6;
-
+    private static final int ONE = 1;
     private final Name name;
     private final Date birthDate;
     private final Date deathDate;
@@ -108,26 +108,28 @@ public class BankClient
      */
     public String getDetails()
     {
-        return name.getFullName()
-                + " client #"
-                + clientID
-                + " ("
-                + (isAlive() ? "alive" : "not alive")
-                + ") joined the bank on "
-                + signupDate.getDayOfTheWeek()
-                + ", "
-                + Date.MONTH_NAMES[signupDate.getMonth() - 1]
-                + " "
-                + signupDate.getDay()
-                + ", "
-                + signupDate.getYear();
+        return name.getFullName() +
+                " client #" +
+                clientID +
+                " (" +
+                (isAlive() ? "alive" : "not alive") +
+                ") joined the bank on " +
+                signupDate.getDayOfTheWeek() +
+                ", " +
+                Date.MONTH_NAMES[signupDate.getMonth() - ONE] +
+                " " +
+                signupDate.getDay() +
+                ", " +
+                signupDate.getYear();
     }
 
+    /* Method that checks whether the client is still alive. */
     private boolean isAlive()
     {
         return deathDate == null;
     }
 
+    /* Method to validate the birthdate. */
     private static void validateBirthDate(final Date birthDate)
     {
         if (birthDate == null) {
@@ -135,12 +137,13 @@ public class BankClient
         }
     }
 
+    /* Method to validate the client ID. */
     private static void validateClientID(final String clientID)
     {
-        if (clientID == null
-                || clientID.trim().isBlank()
-                || clientID.length() < MIN_CLIENT_ID_LENGTH
-                || clientID.length() > MAX_CLIENT_ID_LENGTH) {
+        if (clientID == null ||
+                clientID.trim().isBlank() ||
+                clientID.length() < MIN_CLIENT_ID_LENGTH ||
+                clientID.length() > MAX_CLIENT_ID_LENGTH) {
             throw new IllegalArgumentException("Invalid client ID");
         }
     }

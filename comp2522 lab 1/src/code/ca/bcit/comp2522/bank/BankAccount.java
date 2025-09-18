@@ -10,9 +10,9 @@ package ca.bcit.comp2522.bank;
  * Finally, it may hold the date when the account was closed
  * (or remain null if the account is still active).
  *
- * @author Minsu
- * @author Hali
- * @author Esin
+ * @author Minsu Kim
+ * @author Hali Imanpanah
+ * @author Esin Sahutoglu
  * @version 1.0
  */
 public class BankAccount
@@ -20,7 +20,7 @@ public class BankAccount
 
     private static final int MAX_ACCOUNT_NUMBER_LENGTH = 7;
     private static final int MIN_ACCOUNT_NUMBER_LENGTH = 6;
-
+    private static final int ONE = 1;
     private final BankClient client;
     private double balanceUsd;
     private final int pin;
@@ -176,37 +176,39 @@ public class BankAccount
      */
     public String getDetails()
     {
-        return client.getName().getFullName()
-                + " had $"
-                + balanceUsd
-                + " USD in account #"
-                + accountNumber
-                + " which he opened on "
-                + accountOpened.getDayOfTheWeek()
-                + " "
-                + Date.MONTH_NAMES[accountOpened.getMonth() - 1]
-                + " "
-                + accountOpened.getDay()
-                + ", "
-                + accountOpened.getYear()
-                + (accountClosed == null ?
-                " and is still open."
-                : " and closed "
-                + accountClosed.getDayOfTheWeek()
-                + " "
-                + Date.MONTH_NAMES[accountClosed.getMonth() - 1]
-                + " "
-                + accountClosed.getDay()
-                + ", "
-                + accountClosed.getYear()
-                + ".");
+        return client.getName().getFullName() +
+                " had $" +
+                balanceUsd +
+                " USD in account #" +
+                accountNumber +
+                " which he opened on " +
+                accountOpened.getDayOfTheWeek() +
+                " " +
+                Date.MONTH_NAMES[accountOpened.getMonth() - ONE] +
+                " " +
+                accountOpened.getDay() +
+                ", " +
+                accountOpened.getYear() +
+                (accountClosed == null ?
+                        " and is still open." :
+                        " and closed " +
+                                accountClosed.getDayOfTheWeek() +
+                                " " +
+                                Date.MONTH_NAMES[accountClosed.getMonth() - ONE] +
+                                " " +
+                                accountClosed.getDay() +
+                                ", " +
+                                accountClosed.getYear() +
+                                ".");
     }
 
+    /* Method that checks whether the entered PIN matches the account's PIN. */
     private boolean isMatch(final int enteredPin)
     {
         return enteredPin == pin;
     }
 
+    /* Method that validates the client. */
     private static void validateClient(final BankClient client)
     {
         if (client == null) {
@@ -214,6 +216,7 @@ public class BankAccount
         }
     }
 
+    /* Method that validates the balance. */
     private static void validateBalanceUsd(final double balanceUsd)
     {
         if (balanceUsd < 0) {
@@ -221,6 +224,7 @@ public class BankAccount
         }
     }
 
+    /* method that validates the PIN. */
     private static void validatePin(final int pin)
     {
         if (pin < 0) {
@@ -228,15 +232,17 @@ public class BankAccount
         }
     }
 
+    /* method that validates the account number. */
     private static void validateAccountNumber(final String accountNumber)
     {
-        if (accountNumber == null
-            || accountNumber.length() < MIN_ACCOUNT_NUMBER_LENGTH
-            || accountNumber.length() > MAX_ACCOUNT_NUMBER_LENGTH) {
+        if (accountNumber == null ||
+                accountNumber.length() < MIN_ACCOUNT_NUMBER_LENGTH ||
+                accountNumber.length() > MAX_ACCOUNT_NUMBER_LENGTH) {
             throw new IllegalArgumentException("Invalid account number");
         }
     }
 
+    /* method that validates the account opened date. */
     private static void validateAccountOpened(final Date accountOpened)
     {
         if (accountOpened == null) {

@@ -12,9 +12,9 @@ package ca.bcit.comp2522.bank;
  * and for common numeric values (0, 1, 2, 4, 6, 7, 12, 100).
  * Finally, it provides month codes used for calculating the day of the week.
  *
- * @author Minsu
- * @author Hali
- * @author Esin
+ * @author Minsu Kim
+ * @author Hali Imanpanah
+ * @author Esin Sahutoglu
  * @version 1.0
  */
 public class Date
@@ -23,7 +23,6 @@ public class Date
     private static final int FIRST_YEAR_OF_1900S = 1900;
     private static final int FIRST_YEAR_OF_2000S = 2000;
     private static final int CURRENT_YEAR = 2025;
-
     private static final int MAX_DAYS_IN_LEAP_YEAR = 29;
     private static final int MAX_DAYS_IN_NON_LEAP_YEAR = 28;
     private static final int MAX_DAYS_IN_JANUARY = 31;
@@ -31,16 +30,14 @@ public class Date
     private static final int DIV_400 = 400;
     private static final int DIV_100 = 100;
     private static final int DIV_4   = 4;
-
     private static final int ZERO = 0;
-    private static final int ONE = 1;
+    private static final int FIRST_DAY_OF_MONTH = 1;
     private static final int TWO = 2;
     private static final int FOUR = 4;
     private static final int SIX = 6;
-    private static final int SEVEN = 7;
-    private static final int TWELVE = 12;
+    private static final int DAYS_PER_WEEK = 7;
+    private static final int MONTHS_PER_YEAR = 12;
     private static final int HUNDRED = 100;
-
     private static final int MIN_YEAR = 1800;
     private static final int JANUARY = 1;
     private static final int FEBRUARY = 2;
@@ -50,6 +47,7 @@ public class Date
     private static final int NOVEMBER = 11;
     private static final int DECEMBER = 12;
 
+    /* Month codes used for calculating the day of the week */
     private static final int[] MONTH_CODES =
             {1, 4, 4, 0, 2, 5, 0, 3, 6, 1, 4, 6};
 
@@ -71,8 +69,13 @@ public class Date
             "November",
             "December"};
 
+    /* The year */
     private final int year;
+
+    /* The month */
     private final int month;
+
+    /* The day */
     private final int day;
 
     /**
@@ -141,7 +144,6 @@ public class Date
     }
 
     /**
-     * /**
      *  Calculates the day of the week for the given date (year, month, and day).
      *  This method uses century offsets, month codes, and leap year rules
      *  to determine the correct weekday. The result is returned as a
@@ -163,25 +165,26 @@ public class Date
         int offset = getCenturyOffset(year);
         int yearPart = year % HUNDRED;
 
-        int twelves = yearPart/TWELVE;
-        int remainder = yearPart - (twelves * TWELVE);
+        int twelves = yearPart/MONTHS_PER_YEAR;
+        int remainder = yearPart - (twelves * MONTHS_PER_YEAR);
         int fours = remainder / FOUR;
 
-        int total =  MONTH_CODES[month - ONE]
-                + offset
-                + twelves
-                + remainder
-                + fours
-                + day;
+        int total =  MONTH_CODES[month - FIRST_DAY_OF_MONTH] +
+                offset +
+                twelves +
+                remainder +
+                fours +
+                day;
 
         if (isLeapYear(year) &&
                 (month == JANUARY || month == FEBRUARY))
         {
             total += SIX;
         }
-        return weekdays[total % SEVEN];
+        return weekdays[total % DAYS_PER_WEEK];
     }
 
+    /* The method that calculates the century offset. */
     private int getCenturyOffset(final int year)
     {
         if (year >= FIRST_YEAR_OF_2000S) {
@@ -193,6 +196,7 @@ public class Date
         }
     }
 
+    /* The method that checks whether the given year is a leap year. */
     private static boolean isLeapYear(final int year)
     {
         return (year % DIV_4 == ZERO)
@@ -200,47 +204,55 @@ public class Date
                 || (year % DIV_400 == ZERO);
     }
 
+    /* The method that calculates the maximum number of days in a month. */
     private static int maxDayInMonth(final int year,
-                                     final int month)
-    {
-        return switch (month) {
-            case APRIL,
-                 JUNE,
-                 SEPTEMBER,
-                 NOVEMBER
-                    -> MAX_DAYS_IN_APRIL;
-            case FEBRUARY
-                    -> isLeapYear(year)
-                    ? MAX_DAYS_IN_LEAP_YEAR
-                    : MAX_DAYS_IN_NON_LEAP_YEAR;
-            default -> MAX_DAYS_IN_JANUARY;
-        };
+                                     final int month) {
+        if (month == APRIL ||
+                month == JUNE ||
+                month == SEPTEMBER ||
+                month == NOVEMBER)
+        {
+            return MAX_DAYS_IN_APRIL;
+        }
+        else if (month == FEBRUARY)
+        {
+            return isLeapYear(year) ?
+                    MAX_DAYS_IN_LEAP_YEAR :
+                    MAX_DAYS_IN_NON_LEAP_YEAR;
+        }
+        else
+        {
+            return MAX_DAYS_IN_JANUARY;
+        }
     }
 
+    /* Method to validate the year. */
     private static void validateYear(final int year)
     {
-        if (year < MIN_YEAR
-            || year > CURRENT_YEAR)
+        if (year < MIN_YEAR ||
+                year > CURRENT_YEAR)
         {
             throw new IllegalArgumentException("Invalid year");
         }
     }
 
+    /* Method to validate the month. */
     private static void validateMonth(final int month)
     {
-        if (month < JANUARY
-            || month > DECEMBER)
+        if (month < JANUARY ||
+                month > DECEMBER)
         {
             throw new IllegalArgumentException("Invalid month");
         }
     }
 
+    /* Method to validate the day. */
     private static void validateDay(final int day,
                                     final int month,
                                     final int year)
     {
-        if (day < ONE
-            || day > maxDayInMonth(year, month))
+        if (day < FIRST_DAY_OF_MONTH ||
+                day > maxDayInMonth(year, month))
         {
             throw new IllegalArgumentException("Invalid day");
         }

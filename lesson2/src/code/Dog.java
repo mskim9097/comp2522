@@ -5,7 +5,7 @@ class Dog extends Animal
     private final String name;
 
     Dog(final int birthYear,
-        final String name) throws IOException
+        final String name) throws IllegalDogBirthYearException
     {
         super(Dog.validateBirthYear(birthYear));
         this.name = name;
@@ -20,9 +20,9 @@ class Dog extends Animal
 
     static int validateBirthYear(final int birthYear)
     {
-        if (birthYear < 2000)
+        if (birthYear < 2005)
         {
-            throw new IllegalArgumentException("Invalid birth year");
+            throw new IllegalArgumentException("No");
         }
         return birthYear;
     }

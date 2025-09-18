@@ -2,7 +2,8 @@ import java.io.IOException;
 
 public class Dolphin extends Animal
 {
-    Dolphin(final int birthYear) throws IOException
+    Dolphin(final int birthYear)
+            throws IllegalDogBirthYearException
     {
         super(birthYear);
     }
@@ -11,6 +12,6 @@ public class Dolphin extends Animal
     @Override
     void speak()
     {
-        System.out.println("Dolphin says!");
+        System.out.println("ee e eee");
     }
 }
