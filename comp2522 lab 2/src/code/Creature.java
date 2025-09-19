@@ -25,19 +25,17 @@ public class Creature
      * @param name The name of the creature
      * @param dateOfBirth The birthDate of the creature
      * @param health The health of the creature
-     * @throws IllegalArgumentException If the name, birthDate or health is invalid
      */
     public Creature(final String name,
                     final Date dateOfBirth,
                     int health)
-            throws IllegalArgumentException
     {
         validateName(name);
         validateDateOfBirth(dateOfBirth);
         validateHealth(health);
 
         this.name = name;
-        this.dateOfBirth = new Date(dateOfBirth.getTime());
+        this.dateOfBirth = dateOfBirth;
         this.health = health;
     }
 
@@ -53,10 +51,8 @@ public class Creature
     /**
      * Method that takes damage from the creature.
      * @param damage The amount of damage to take
-     * @throws DamageException If the damage is negative
      */
     public void takeDamage(final int damage)
-            throws DamageException
     {
         if (damage < NO_DAMAGE)
         {
@@ -73,10 +69,8 @@ public class Creature
     /**
      * Method that heals the creature.
      * @param healAmount The amount of health to heal
-     * @throws HealingException If the healAmount is negative
      */
     public void heal(final int healAmount)
-            throws HealingException
     {
         if(healAmount < NO_HEALING)
         {
@@ -96,20 +90,16 @@ public class Creature
      */
     public int getAgeYears()
     {
-        final Calendar today = Calendar.getInstance();
-        final Calendar birthDateCalendar = Calendar.getInstance();
-        birthDateCalendar.setTime(dateOfBirth);
+        final Calendar now = Calendar.getInstance();
+        final Calendar birth = Calendar.getInstance();
+        birth.setTime(dateOfBirth);
 
-        int age = today.get(Calendar.YEAR) -
-                birthDateCalendar.get(Calendar.YEAR);
+        int age = now.get(Calendar.YEAR) -
+                birth.get(Calendar.YEAR);
 
         // if birthdate is in the future, subtract 1
-        if (today.get(Calendar.MONTH) <
-                birthDateCalendar.get(Calendar.MONTH) ||
-                (today.get(Calendar.MONTH) ==
-                        birthDateCalendar.get(Calendar.MONTH) &&
-                        today.get(Calendar.DAY_OF_MONTH) <
-                                birthDateCalendar.get(Calendar.DAY_OF_MONTH)))
+        if(now.get(Calendar.DAY_OF_YEAR) <
+                birth.get(Calendar.DAY_OF_YEAR))
         {
             age--;
         }
@@ -121,23 +111,21 @@ public class Creature
      */
     public void getDetails()
     {
-        final StringBuilder detail = new StringBuilder();
-        detail.append("Name: ").
-                append(name).
-                append("\nDate of birth: ").
-                append(dateOfBirth).
-                append("\nAge: ").
-                append(getAgeYears()).
-                append("\nHealth: ").
-                append(health);
-        System.out.println(detail);
+        System.out.println("Name: " +
+                name +
+                "\nDate Of Birth: " +
+                dateOfBirth +
+                "\nAge" +
+                getAgeYears() +
+                "\nHealth: " +
+                health);
     }
 
     /* Methods that validate the input name. */
     private static void validateName(final String name)
-            throws IllegalArgumentException
     {
-        if (name == null || name.trim().isEmpty())
+        if (name == null ||
+                name.trim().isEmpty())
         {
             throw new IllegalArgumentException(
                     "Name cannot be null or empty.");
@@ -146,43 +134,46 @@ public class Creature
 
     /* Methods that validate the input date of birth. */
     private static void validateDateOfBirth(final Date dateOfBirth)
-            throws IllegalArgumentException
     {
+        final Date now;
+
+        now = new Date();
         // can be deleted
-        if (dateOfBirth == null)
+        if (dateOfBirth == null
+                || dateOfBirth.after(now))
         {
             throw new IllegalArgumentException(
-                    "Date of birth cannot be null.");
+                    "Invalid date of birth.");
         }
 
-        final Calendar today = Calendar.getInstance();
-        final Calendar birthDateCalendar = Calendar.getInstance();
-        birthDateCalendar.setTime(dateOfBirth);
 
-        final int birthYear = birthDateCalendar.get(Calendar.YEAR);
-        final int birthMonth = birthDateCalendar.get(Calendar.MONTH);
-        final int birthDay = birthDateCalendar.get(Calendar.DAY_OF_MONTH);
-
-        final int todayYear = today.get(Calendar.YEAR);
-        final int todayMonth = today.get(Calendar.MONTH);
-        final int todayDay = today.get(Calendar.DAY_OF_MONTH);
-
-        if (birthYear > todayYear ||
-                (birthYear == todayYear &&
-                        birthMonth > todayMonth) ||
-                (birthYear == todayYear &&
-                        birthMonth == todayMonth &&
-                        birthDay > todayDay))
-        {
-            throw new IllegalArgumentException(
-                    "Date of birth cannot be in the future.");
-        }
+//        final Calendar today = Calendar.getInstance();
+//        final Calendar birthDateCalendar = Calendar.getInstance();
+//        birthDateCalendar.setTime(dateOfBirth);
+//
+//        final int birthYear = birthDateCalendar.get(Calendar.YEAR);
+//        final int birthMonth = birthDateCalendar.get(Calendar.MONTH);
+//        final int birthDay = birthDateCalendar.get(Calendar.DAY_OF_MONTH);
+//
+//        final int todayYear = today.get(Calendar.YEAR);
+//        final int todayMonth = today.get(Calendar.MONTH);
+//        final int todayDay = today.get(Calendar.DAY_OF_MONTH);
+//
+//        if (birthYear > todayYear ||
+//                (birthYear == todayYear &&
+//                        birthMonth > todayMonth) ||
+//                (birthYear == todayYear &&
+//                        birthMonth == todayMonth &&
+//                        birthDay > todayDay))
+//        {
+//            throw new IllegalArgumentException(
+//                    "Date of birth cannot be in the future.");
+//        }
 
     }
 
     /* Methods that validate the input health. */
     private static void validateHealth(final int health)
-            throws IllegalArgumentException
     {
         if (health < MINIMUM_HEALTH ||
                 health > MAXIMUM_HEALTH)
