@@ -1,6 +1,15 @@
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * The Creature class represents a creature.
+ *
+ * @author Minsu Kim
+ * @author Hali Imanpanah
+ * @author Esin Sahutoglu
+ *
+ * @version 1.0
+ */
 public class Creature
 {
     private static final int MINIMUM_HEALTH = 1;
@@ -8,7 +17,6 @@ public class Creature
     private static final int DEAD_HEALTH = 0;
     private static final int NO_DAMAGE = 0;
     private static final int NO_HEALING = 0;
-
 
     /* The name of the creature */
     private final String name;
@@ -115,7 +123,7 @@ public class Creature
                 name +
                 "\nDate Of Birth: " +
                 dateOfBirth +
-                "\nAge" +
+                "\nAge: " +
                 getAgeYears() +
                 "\nHealth: " +
                 health);
@@ -145,31 +153,6 @@ public class Creature
             throw new IllegalArgumentException(
                     "Invalid date of birth.");
         }
-
-
-//        final Calendar today = Calendar.getInstance();
-//        final Calendar birthDateCalendar = Calendar.getInstance();
-//        birthDateCalendar.setTime(dateOfBirth);
-//
-//        final int birthYear = birthDateCalendar.get(Calendar.YEAR);
-//        final int birthMonth = birthDateCalendar.get(Calendar.MONTH);
-//        final int birthDay = birthDateCalendar.get(Calendar.DAY_OF_MONTH);
-//
-//        final int todayYear = today.get(Calendar.YEAR);
-//        final int todayMonth = today.get(Calendar.MONTH);
-//        final int todayDay = today.get(Calendar.DAY_OF_MONTH);
-//
-//        if (birthYear > todayYear ||
-//                (birthYear == todayYear &&
-//                        birthMonth > todayMonth) ||
-//                (birthYear == todayYear &&
-//                        birthMonth == todayMonth &&
-//                        birthDay > todayDay))
-//        {
-//            throw new IllegalArgumentException(
-//                    "Date of birth cannot be in the future.");
-//        }
-
     }
 
     /* Methods that validate the input health. */

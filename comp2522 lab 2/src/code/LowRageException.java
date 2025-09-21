@@ -1,5 +1,8 @@
-public class LowRageException extends RuntimeException {
-    public LowRageException(String message) {
+public class LowRageException
+        extends RuntimeException
+{
+    public LowRageException(final String message)
+    {
         super(message);
     }
 }

@@ -1,5 +1,6 @@
 public class DamageException
-        extends RuntimeException {
+        extends RuntimeException
+{
     public DamageException(final String message)
     {
         super(message);
