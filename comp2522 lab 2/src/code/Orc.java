@@ -1,5 +1,24 @@
 import java.util.Date;
 
+import java.util.Date;
+
+/**
+ * The Orc class represents a warrior-like creature that extends
+ * the {@link Creature} class. In addition to the inherited
+ * attributes (name, date of birth, and health), an Orc has
+ * a rage attribute that fuels its berserk attacks.
+ * Orcs can:
+ * - Enter berserk mode to deal damage to a target
+ * - Deal double damage when rage exceeds a threshold
+ * - Display detailed information including rage
+ * Rage increases when berserk is used, capped at 30.
+ *
+ * @author Minsu Kim
+ * @author Hali Imanpanah
+ * @author Esin Sahutoglu
+ * 
+ * @version 1.0
+ */
 public class Orc extends Creature
 {
     private static final int MINIMUM_RAGE = 0;
@@ -12,6 +31,16 @@ public class Orc extends Creature
 
     private int rage;
 
+    /**
+     * Constructor for the Orc class.
+     * Initializes all attributes and validates rage.
+     *
+     * @param name The name of the Orc
+     * @param dateOfBirth The birth date of the Orc
+     * @param health The health value of the Orc
+     * @param rage The initial rage value of the Orc
+     * @throws IllegalArgumentException if rage is invalid
+     */
     public Orc(final String name,
                final Date dateOfBirth,
                int health,
@@ -24,6 +53,10 @@ public class Orc extends Creature
         this.rage = rage;
     }
 
+    /**
+     * Prints the details of the Orc, including inherited
+     * attributes and the rage value.
+     */
     @Override
     public void getDetails()
     {
@@ -31,6 +64,14 @@ public class Orc extends Creature
         System.out.println("Rage: " + rage);
     }
 
+    /**
+     * Allows the Orc to go berserk and attack a target Creature.
+     * Rage increases after using berserk, and if the rage is above
+     * a threshold, the Orc deals double damage.
+     *
+     * @param target The Creature being attacked
+     * @throws LowRageException if rage is too low to attack
+     */
     public void berserk(final Creature target)
             throws LowRageException
     {
@@ -53,6 +94,12 @@ public class Orc extends Creature
         }
     }
 
+    /**
+     * Validates the rage value.
+     *
+     * @param rage The rage value to check
+     * @throws IllegalArgumentException if rage is out of range (0–30)
+     */
     private static void validateRage(final int rage)
     {
         if(rage < MINIMUM_RAGE ||

@@ -10,7 +10,6 @@ package ca.bcit.comp2522.bank;
  */
 public class Main
 {
-
     /**
      * Main entry point of the program.
      * Firstly, it creates four {@link Name} objects for Albert Einstein,
@@ -116,7 +115,7 @@ public class Main
         System.out.println(n1.getReverseName());
         System.out.println(c1.getDetails());
         System.out.println(b1.getDetails());
-        b1.withdraw(100);
+        b1.withdrawUsd(100);
         System.out.println(b1.getDetails() + "\n");
 
         System.out.println(n2.getInitials());
@@ -124,7 +123,7 @@ public class Main
         System.out.println(n2.getReverseName());
         System.out.println(c2.getDetails());
         System.out.println(b2.getDetails());
-        b2.withdraw(200, 4664);
+        b2.withdrawUsd(200, 4664);
         System.out.println(b2.getDetails() + "\n");
 
         System.out.println(n3.getInitials());
@@ -132,7 +131,7 @@ public class Main
         System.out.println(n3.getReverseName());
         System.out.println(c3.getDetails());
         System.out.println(b3.getDetails());
-        b3.withdraw(50, 1907);
+        b3.withdrawUsd(50, 1907);
         System.out.println(b3.getDetails() + "\n");
 
         System.out.println(n4.getInitials());
@@ -140,7 +139,7 @@ public class Main
         System.out.println(n4.getReverseName());
         System.out.println(c4.getDetails());
         System.out.println(b4.getDetails());
-        b4.withdraw(500);
+        b4.withdrawUsd(500);
         System.out.println(b4.getDetails());
     }
 }

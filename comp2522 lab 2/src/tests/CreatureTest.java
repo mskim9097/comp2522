@@ -1,32 +1,69 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CreatureTest
-{
-    public static void main(final String[] args)
-    {
-        final Creature c1;
-        final Creature c2;
-        final Creature c3;
+public class CreatureTest {
+    public static void main(String[] args) {
 
-        final Date d1 = new Date(125,1,29);
-        final Date d2 = new Date(124,11,2);
-        final Date d3 = new Date(119,3,8);
+        Creature[] creatures = new Creature[3];
 
-        c1 = new Dragon("Dragon", d1, 100, 100);
-        c2 = new Elf("Elf", d2, 100, 50);
-        c3 = new Orc("Orc", d3, 100, 0);
+        try {
+            /* Creates Dragon. */
+            Date birthDate = new SimpleDateFormat("yyyy-MM-dd").parse("2000-02-21");
+            creatures[0] = new Dragon("Dragon", birthDate, 100, 100);
 
-        Creature[] party = {c1, c2, c3};
-        for(Creature c : party)
-        {
-            c.getDetails();
-            System.out.println("Type via instanceof: " +
-                    (c instanceof Dragon ? "Dragon" :
-                            c instanceof Elf ? "Elf" :
-                            c instanceof Orc ? "Orc" :
-                                    "Unknown"));
-            System.out.println("Type via getClass(): " +
-                    c.getClass());
+        } catch (ParseException e) {
+            System.out.println("Failed to create Dragon: " + e.getMessage());
         }
+
+
+        try {
+            /* Creates Elf. */
+            Date birthDate = new SimpleDateFormat("yyyy-MM-dd").parse("2000-02-21");
+            creatures[1] = new Elf("Elf", birthDate, 100,  50);
+
+        } catch (ParseException e) {
+            System.out.println("Failed to create Elf: " + e.getMessage());
+        }
+
+
+        try {
+            /* Creates Orc. */
+            Date birthDate = new SimpleDateFormat("yyyy.MM.dd").parse("2002.03.23");
+            creatures[2] = new Orc("Orc", birthDate, 100, 30);
+
+        } catch (ParseException e) {
+            System.out.println("Failed to create Orc: " + e.getMessage());
+        }
+
+        System.out.println("\n         Creature Details and Actions                    ");
+
+        for (Creature c : creatures) {
+            if (c == null) continue;
+
+            try {
+                System.out.println("\n");
+                c.getDetails();
+                System.out.println("Class: " + c.getClass().getSimpleName());
+
+                if (c instanceof Dragon) {
+                    ((Dragon) c).breathFire(creatures[1]);
+                } else if (c instanceof Elf) {
+                    ((Elf) c).castSpell(creatures[2]);
+                } else if (c instanceof Orc) {
+                    ((Orc) c).berserk(creatures[0]);
+                }
+            } catch (Exception e) {
+                System.out.println("Error during creature: " + e.getMessage());
+            }
+        }
+
     }
 }
+
+
+
+
+
+
+

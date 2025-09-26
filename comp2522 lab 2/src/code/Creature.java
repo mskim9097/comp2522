@@ -2,7 +2,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * The Creature class represents a creature.
+ * The Creature class represents a creature with a name, date of birth,
+ * and health status. It includes methods to take damage, heal,
+ * calculate age, and display details.
  *
  * @author Minsu Kim
  * @author Hali Imanpanah
@@ -18,21 +20,17 @@ public class Creature
     private static final int NO_DAMAGE = 0;
     private static final int NO_HEALING = 0;
 
-    /* The name of the creature */
     private final String name;
-
-    /* The birthDate the creature */
     private final Date dateOfBirth;
-
-    /* The health of the creature */
     private int health;
 
     /**
      * Constructor for the Creature class.
+     * Validates inputs and sets initial values.
      *
-     * @param name The name of the creature
-     * @param dateOfBirth The birthDate of the creature
-     * @param health The health of the creature
+     * @param name The name of the creature (non-null, not empty)
+     * @param dateOfBirth The birth date of the creature (non-null, not in the future)
+     * @param health The health of the creature (between 1 and 100)
      */
     public Creature(final String name,
                     final Date dateOfBirth,
@@ -49,7 +47,7 @@ public class Creature
 
     /**
      * Method that checks if the creature is alive.
-     * @return true if the creature is alive, false otherwise
+     * @return true if the creature is greater than 0, false otherwise
      */
     public boolean isAlive()
     {
@@ -57,8 +55,11 @@ public class Creature
     }
 
     /**
-     * Method that takes damage from the creature.
+     * Reduces the creature's health by the given damage amount.
+     * Health cannot drop below 0.
+     *
      * @param damage The amount of damage to take
+     * @throws DamageException if damage is negative
      */
     public void takeDamage(final int damage)
     {
@@ -75,8 +76,11 @@ public class Creature
     }
 
     /**
-     * Method that heals the creature.
+     * Increases the creature's health by the given healing amount.
+     * Health cannot exceed 100.
+     *
      * @param healAmount The amount of health to heal
+     * @throws HealingException if healing amount is negative
      */
     public void heal(final int healAmount)
     {
@@ -93,8 +97,9 @@ public class Creature
     }
 
     /**
-     * Method that calculates the age of the creature.
-     * @return The age of the creature.
+     * Calculates the creature's age in full years.
+     *
+     * @return The age of the creature in years
      */
     public int getAgeYears()
     {
@@ -115,7 +120,8 @@ public class Creature
     }
 
     /**
-     * Method that prints the details of the creature.
+     * Prints the details of the creature, including:
+     * name, date of birth, age, and current health.
      */
     public void getDetails()
     {
@@ -129,7 +135,12 @@ public class Creature
                 health);
     }
 
-    /* Methods that validate the input name. */
+    /**
+     * Validates the creature's name.
+     *
+     * @param name The name to validate
+     * @throws IllegalArgumentException if name is null or empty
+     */
     private static void validateName(final String name)
     {
         if (name == null ||
@@ -140,7 +151,12 @@ public class Creature
         }
     }
 
-    /* Methods that validate the input date of birth. */
+    /**
+     * Validates the creature's date of birth.
+     *
+     * @param dateOfBirth The date to validate
+     * @throws IllegalArgumentException if date is null or in the future
+     */
     private static void validateDateOfBirth(final Date dateOfBirth)
     {
         final Date now;
@@ -155,7 +171,12 @@ public class Creature
         }
     }
 
-    /* Methods that validate the input health. */
+    /**
+     * Validates the creature's health value.
+     *
+     * @param health The health value to validate
+     * @throws IllegalArgumentException if health is out of range (1–100)
+     */
     private static void validateHealth(final int health)
     {
         if (health < MINIMUM_HEALTH ||

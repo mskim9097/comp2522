@@ -1,7 +1,12 @@
 import java.util.Date;
 
 /**
- * Dragon class represents a dragon.
+ * The Dragon class represents a creature of type Dragon,
+ * which extends the {@link Creature} class. In addition to
+ * health, name, and date of birth, a Dragon has a firePower
+ * attribute that determines its ability to breathe fire.
+ * It includes methods for breathing fire, restoring firepower,
+ * and printing Dragon-specific details.
  *
  * @author Minsu Kim
  * @author Hali Imanpanah
@@ -16,16 +21,17 @@ public class Dragon extends Creature {
     private static final int FIRE_POWER_DECREMENT= 10;
     private static final int BREATHE_FIRE_DAGAGE = 20;
 
-    /* Firepower of the dragon. */
     private int firePower;
 
     /**
      * Constructor for the Dragon class.
+     * Validates firePower and initializes the Dragon object.
      *
      * @param name The name of the dragon
-     * @param dateOfBirth The birthDate of the dragon
+     * @param dateOfBirth The birth date of the dragon
      * @param health The health of the dragon
-     * @param firePower The firepower of the dragon
+     * @param firePower The initial fire power of the dragon
+     * @throws IllegalArgumentException if firePower is invalid
      */
     public Dragon(final String name,
                   final Date dateOfBirth,
@@ -40,7 +46,10 @@ public class Dragon extends Creature {
         this.firePower = firePower;
     }
 
-    /* Method that prints the details of the Dragon */
+    /**
+     * Prints details of the dragon, including inherited fields
+     * from Creature and firePower.
+     */
     @Override
     public void getDetails()
     {
@@ -48,6 +57,13 @@ public class Dragon extends Creature {
         System.out.println("Fire Power: " + firePower);
     }
 
+    /**
+     * Allows the dragon to breathe fire at another Creature.
+     * Consumes firepower and reduces the target's health.
+     *
+     * @param target The Creature to attack with fire
+     * @throws LowFirePowerException if firePower is too low
+     */
     public void breathFire(final Creature target)
             throws LowFirePowerException
     {
@@ -59,6 +75,14 @@ public class Dragon extends Creature {
         target.takeDamage(BREATHE_FIRE_DAGAGE);
     }
 
+
+    /**
+     * Restores the dragon's firepower by a given amount.
+     * Firepower is capped at 100.
+     *
+     * @param amount The amount of fire power to restore
+     * @throws IllegalArgumentException if amount is negative
+     */
     public void restoreFirePower(final int amount)
     {
         if (amount < MINIMUM_FIRE_POWER)
@@ -73,7 +97,13 @@ public class Dragon extends Creature {
         }
     }
 
-    /* Method that validates the input firepower. */
+    /**
+     * Validates the firepower value to ensure it is within
+     * the allowed range (0–100).
+     *
+     * @param firePower The fire power value to validate
+     * @throws IllegalArgumentException if firePower is out of range
+     */
     private static void validateFirePower(final int firePower)
     {
         if (firePower < MINIMUM_FIRE_POWER ||

@@ -17,10 +17,13 @@ package ca.bcit.comp2522.bank;
  */
 public class BankAccount
 {
+    private static final int MAXIMUM_ACCOUNT_NUMBER_LENGTH = 7;
+    private static final int MINIMUM_ACCOUNT_NUMBER_LENGTH = 6;
 
-    private static final int MAX_ACCOUNT_NUMBER_LENGTH = 7;
-    private static final int MIN_ACCOUNT_NUMBER_LENGTH = 6;
-    private static final int ONE = 1;
+    private static final int NO_BALANCE = 0;
+    private static final double NO_DEPOSIT = 0.0;
+    private static final int ZERO_PIN = 0;
+
     private final BankClient client;
     private double balanceUsd;
     private final int pin;
@@ -39,7 +42,7 @@ public class BankAccount
      * @param accountClosed account closed date of the account.
      */
     public BankAccount(final BankClient client,
-                       double balanceUsd,
+                       final double balanceUsd,
                        final int pin,
                        final String accountNumber,
                        final Date accountOpened,
@@ -71,7 +74,7 @@ public class BankAccount
     }
 
     /**
-     *Creating a getter to get the balance of the account in USD.
+     * Creating a getter to get the balance of the account in USD.
      *
      * @return balance of the account in USD.
      */
@@ -128,9 +131,10 @@ public class BankAccount
      *
      * @param amountUsd the amount of money (in USD) to withdraw
      */
-    public void withdraw(final double amountUsd)
+    public void withdrawUsd(final double amountUsd)
     {
-        if(amountUsd > 0 && balanceUsd >= amountUsd) {
+        if(amountUsd > NO_BALANCE && balanceUsd >= amountUsd)
+        {
             balanceUsd -= amountUsd;
         }
     }
@@ -138,7 +142,7 @@ public class BankAccount
     /**
      * Withdraws money from the account if the given PIN matches.
      * Firstly, it checks whether the provided PIN matches the account's PIN.
-     * Secondly, if the PIN is correct, it calls {@link #withdraw(double)}
+     * Secondly, if the PIN is correct, it calls {@link #withdrawUsd(double)}
      * to subtract the amount from the balance (only if the amount is valid
      * and there are enough funds).
      * If the PIN does not match, no money is withdrawn.
@@ -146,12 +150,12 @@ public class BankAccount
      * @param amountUsd   the amount of money (in USD) to withdraw
      * @param pinToMatch  the PIN provided by the user, checked against the account's PIN
      */
-    public void withdraw(final double amountUsd,
-                         final int pinToMatch)
+    public void withdrawUsd(final double amountUsd,
+                            final int pinToMatch)
     {
         if (isMatch(pinToMatch))
         {
-            withdraw(amountUsd);
+            withdrawUsd(amountUsd);
         }
     }
 
@@ -162,9 +166,10 @@ public class BankAccount
      *
      * @param amountUsd the amount of money (in USD) to deposit
      */
-    public void deposit(final double amountUsd)
+    public void depositUsd(final double amountUsd)
     {
-        if (amountUsd > 0.0) {
+        if (amountUsd > NO_DEPOSIT)
+        {
             balanceUsd += amountUsd;
         }
     }
@@ -184,7 +189,7 @@ public class BankAccount
                 " which he opened on " +
                 accountOpened.getDayOfTheWeek() +
                 " " +
-                Date.MONTH_NAMES[accountOpened.getMonth() - ONE] +
+                Date.getMonthName(getAccountOpened().getMonth()) +
                 " " +
                 accountOpened.getDay() +
                 ", " +
@@ -194,7 +199,7 @@ public class BankAccount
                         " and closed " +
                                 accountClosed.getDayOfTheWeek() +
                                 " " +
-                                Date.MONTH_NAMES[accountClosed.getMonth() - ONE] +
+                                Date.getMonthName(getAccountClosed().getMonth()) +
                                 " " +
                                 accountClosed.getDay() +
                                 ", " +
@@ -208,10 +213,13 @@ public class BankAccount
         return enteredPin == pin;
     }
 
+
+
     /* Method that validates the client. */
     private static void validateClient(final BankClient client)
     {
-        if (client == null) {
+        if (client == null)
+        {
             throw new IllegalArgumentException("Invalid client");
         }
     }
@@ -219,7 +227,7 @@ public class BankAccount
     /* Method that validates the balance. */
     private static void validateBalanceUsd(final double balanceUsd)
     {
-        if (balanceUsd < 0) {
+        if (balanceUsd < NO_BALANCE) {
             throw new IllegalArgumentException("Invalid balance");
         }
     }
@@ -227,7 +235,7 @@ public class BankAccount
     /* method that validates the PIN. */
     private static void validatePin(final int pin)
     {
-        if (pin < 0) {
+        if (pin < ZERO_PIN) {
             throw new IllegalArgumentException("Invalid pin");
         }
     }
@@ -236,8 +244,8 @@ public class BankAccount
     private static void validateAccountNumber(final String accountNumber)
     {
         if (accountNumber == null ||
-                accountNumber.length() < MIN_ACCOUNT_NUMBER_LENGTH ||
-                accountNumber.length() > MAX_ACCOUNT_NUMBER_LENGTH) {
+                accountNumber.length() < MINIMUM_ACCOUNT_NUMBER_LENGTH ||
+                accountNumber.length() > MAXIMUM_ACCOUNT_NUMBER_LENGTH) {
             throw new IllegalArgumentException("Invalid account number");
         }
     }

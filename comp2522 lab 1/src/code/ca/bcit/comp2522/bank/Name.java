@@ -5,7 +5,7 @@ package ca.bcit.comp2522.bank;
  * Firstly, this class provides functionality to retrieve initials, full name, and reverse.
  * Secondly, validating the name if we have corrected the letter size of the name.
  * Also, it checks to make sure that
- * nobody accesses in the program as admin by typing FORBIDDEN_WORD
+ * nobody accesses in the program as admin by typing FORBIDDEN_USERNAME
  *
  * @author Minsu Kim
  * @author Hali Imanpanah
@@ -14,15 +14,10 @@ package ca.bcit.comp2522.bank;
  */
 public class Name
 {
-    /* The maximum length of a name */
-    private static final int MAX_NAME_LENGTH = 45;
+    private static final int MAXIMUM_ALLOWED_NAME_LENGTH = 99;
+    private static final String FORBIDDEN_USERNAME = "admin";
 
-    /* The word that is forbidden to be used */
-    private static final String FORBIDDEN_WORD = "admin";
-
-    /* The first name of the client */
     private final String first;
-    /* The last name of the client */
     private final String last;
 
     /**
@@ -71,10 +66,15 @@ public class Name
      */
     public String getInitials()
     {
-        return first.trim().substring(0, 1).toUpperCase() +
-                "." +
-                last.trim().substring(0, 1).toUpperCase() +
-                 ".";
+        final StringBuilder result;
+        result = new StringBuilder();
+
+        result.append(first.trim().substring(0, 1).toUpperCase());
+        result.append(".");
+        result.append(last.trim().substring(0, 1).toUpperCase());
+        result.append(".");
+
+        return result.toString();
     }
 
     /**
@@ -100,10 +100,13 @@ public class Name
      */
     public String getReverseName()
     {
-        String combined = getFirst() +
-                " " +
-                getLast();
-        return new StringBuilder(combined).reverse().toString();
+        final String combined;
+
+        combined = getFirst() +
+                    " " +
+                    getLast();
+        // new StringBuilder(combined).reverse().toString();
+        return "";
     }
 
     /* The validate methods for first name */
@@ -111,8 +114,8 @@ public class Name
     {
         if (first == null ||
                 first.trim().isBlank() ||
-                first.length() >= MAX_NAME_LENGTH ||
-                first.trim().toLowerCase().contains(FORBIDDEN_WORD))
+                first.length() >= MAXIMUM_ALLOWED_NAME_LENGTH ||
+                first.trim().toLowerCase().contains(FORBIDDEN_USERNAME))
         {
             throw new IllegalArgumentException("Invalid first name");
         }
@@ -123,8 +126,8 @@ public class Name
     {
         if (last == null ||
                 last.trim().isBlank() ||
-                last.length() >= MAX_NAME_LENGTH ||
-                last.trim().toLowerCase().contains(FORBIDDEN_WORD))
+                last.length() >= MAXIMUM_ALLOWED_NAME_LENGTH ||
+                last.trim().toLowerCase().contains(FORBIDDEN_USERNAME))
         {
             throw new IllegalArgumentException("Invalid last name");
         }
