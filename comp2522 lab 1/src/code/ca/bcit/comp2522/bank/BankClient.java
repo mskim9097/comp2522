@@ -20,10 +20,10 @@ public class BankClient
     private static final int MAX_CLIENT_ID_LENGTH = 7;
     private static final int MIN_CLIENT_ID_LENGTH = 6;
 
-    private final Name name;
-    private final Date birthDate;
-    private final Date deathDate;
-    private final Date signupDate;
+    private final Name   name;
+    private final Date   birthDate;
+    private final Date   deathDate;
+    private final Date   signupDate;
     private final String clientID;
 
     /**
@@ -44,11 +44,11 @@ public class BankClient
         validateBirthDate(birthDate);
         validateClientID(clientID);
 
-        this.name = name;
-        this.birthDate = birthDate;
-        this.deathDate = deathDate;
+        this.name       = name;
+        this.birthDate  = birthDate;
+        this.deathDate  = deathDate;
         this.signupDate = signupDate;
-        this.clientID = clientID;
+        this.clientID   = clientID;
     }
 
     /**
@@ -108,23 +108,24 @@ public class BankClient
      */
     public String getDetails()
     {
-        final int monthAfterOffset;
+        final StringBuilder details;
+        details = new StringBuilder();
 
-        monthAfterOffset = signupDate.getMonth();
+        details.append(name.getFullName());
+        details.append(" client #");
+        details.append(clientID);
+        details.append(" (");
+        details.append(isAlive() ? "alive" : "not alive");
+        details.append(") joined the bank on ");
+        details.append(signupDate.getDayOfTheWeek());
+        details.append(", ");
+        details.append(Date.getMonthName(signupDate.getMonth()));
+        details.append(" ");
+        details.append(signupDate.getDay());
+        details.append(", ");
+        details.append(signupDate.getYear());
 
-        return name.getFullName() +
-                " client #" +
-                clientID +
-                " (" +
-                (isAlive() ? "alive" : "not alive") +
-                ") joined the bank on " +
-                signupDate.getDayOfTheWeek() +
-                ", " +
-                Date.getMonthName(monthAfterOffset) +
-                " " +
-                signupDate.getDay() +
-                ", " +
-                signupDate.getYear();
+        return details.toString();
     }
 
     /* Method that checks whether the client is still alive. */
@@ -146,9 +147,9 @@ public class BankClient
     private static void validateClientID(final String clientID)
     {
         if (clientID == null ||
-                clientID.trim().isBlank() ||
-                clientID.length() < MIN_CLIENT_ID_LENGTH ||
-                clientID.length() > MAX_CLIENT_ID_LENGTH)
+            clientID.trim().isBlank() ||
+            clientID.length() < MIN_CLIENT_ID_LENGTH ||
+            clientID.length() > MAX_CLIENT_ID_LENGTH)
         {
             throw new IllegalArgumentException("Invalid client ID");
         }

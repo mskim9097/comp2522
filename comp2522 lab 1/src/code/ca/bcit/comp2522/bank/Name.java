@@ -14,8 +14,8 @@ package ca.bcit.comp2522.bank;
  */
 public class Name
 {
-    private static final int MAXIMUM_ALLOWED_NAME_LENGTH = 99;
-    private static final String FORBIDDEN_USERNAME = "admin";
+    private static final int    MAXIMUM_ALLOWED_NAME_LENGTH = 99;
+    private static final String FORBIDDEN_USERNAME          = "admin";
 
     private final String first;
     private final String last;
@@ -66,15 +66,15 @@ public class Name
      */
     public String getInitials()
     {
-        final StringBuilder result;
-        result = new StringBuilder();
+        final StringBuilder initialName;
+        initialName = new StringBuilder();
 
-        result.append(first.trim().substring(0, 1).toUpperCase());
-        result.append(".");
-        result.append(last.trim().substring(0, 1).toUpperCase());
-        result.append(".");
+        initialName.append(first.trim().substring(0, 1).toUpperCase());
+        initialName.append(".");
+        initialName.append(last.trim().substring(0, 1).toUpperCase());
+        initialName.append(".");
 
-        return result.toString();
+        return initialName.toString();
     }
 
     /**
@@ -86,11 +86,16 @@ public class Name
      */
     public String getFullName()
     {
-        return first.trim().substring(0, 1).toUpperCase() +
-                first.trim().substring(1).toLowerCase() +
-                " " +
-                last.trim().substring(0, 1).toUpperCase() +
-                last.trim().substring(1).toLowerCase();
+        final StringBuilder fullName;
+        fullName = new StringBuilder();
+
+        fullName.append(first.trim().substring(0, 1).toUpperCase());
+        fullName.append(first.trim().substring(1).toLowerCase());
+        fullName.append(" ");
+        fullName.append(last.trim().substring(0, 1).toUpperCase());
+        fullName.append(last.trim().substring(1).toLowerCase());
+
+        return fullName.toString();
     }
 
     /**
@@ -100,22 +105,24 @@ public class Name
      */
     public String getReverseName()
     {
-        final String combined;
+        final StringBuilder reverseName;
+        reverseName = new StringBuilder();
 
-        combined = getFirst() +
-                    " " +
-                    getLast();
-        // new StringBuilder(combined).reverse().toString();
-        return "";
+        reverseName.append(getFirst());
+        reverseName.append(" ");
+        reverseName.append(getLast());
+        reverseName.reverse();
+
+        return reverseName.toString();
     }
 
     /* The validate methods for first name */
     private static void validateFirstName(final String first)
     {
         if (first == null ||
-                first.trim().isBlank() ||
-                first.length() >= MAXIMUM_ALLOWED_NAME_LENGTH ||
-                first.trim().toLowerCase().contains(FORBIDDEN_USERNAME))
+            first.trim().isBlank() ||
+            first.length() >= MAXIMUM_ALLOWED_NAME_LENGTH ||
+            first.trim().toLowerCase().contains(FORBIDDEN_USERNAME))
         {
             throw new IllegalArgumentException("Invalid first name");
         }
@@ -125,9 +132,9 @@ public class Name
     private static void validateLastName(final String last)
     {
         if (last == null ||
-                last.trim().isBlank() ||
-                last.length() >= MAXIMUM_ALLOWED_NAME_LENGTH ||
-                last.trim().toLowerCase().contains(FORBIDDEN_USERNAME))
+            last.trim().isBlank() ||
+            last.length() >= MAXIMUM_ALLOWED_NAME_LENGTH ||
+            last.trim().toLowerCase().contains(FORBIDDEN_USERNAME))
         {
             throw new IllegalArgumentException("Invalid last name");
         }

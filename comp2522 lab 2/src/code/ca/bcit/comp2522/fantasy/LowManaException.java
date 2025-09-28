@@ -1,3 +1,4 @@
+package ca.bcit.comp2522.fantasy;
 
 /**
  * LowManaException is thrown when an elf does not have

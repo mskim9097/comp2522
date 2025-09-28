@@ -1,3 +1,4 @@
+package ca.bcit.comp2522.fantasy;
 
 /**
  * LowFirePowerException is thrown when a dragon does not have

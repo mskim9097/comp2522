@@ -1,3 +1,5 @@
+package ca.bcit.comp2522.fantasy;
+
 import java.util.Date;
 
 /**
@@ -18,9 +20,10 @@ import java.util.Date;
  */
 public class Elf extends Creature
 {
-    private static final int MINIMUM_MANA = 0;
-    private static final int MAXIMUM_MANA = 50;
-    private static final int MANA_DECREMENT = 5;
+    private static final int MINIMUM_MANA      = 0;
+    private static final int MAXIMUM_MANA      = 50;
+
+    private static final int MANA_DECREMENT    = 5;
     private static final int CAST_SPELL_DAMAGE = 10;
 
     private int mana;
@@ -30,10 +33,10 @@ public class Elf extends Creature
      * Initializes all attributes and validates mana.
      *
      * @param name The name of the Elf
-     * @param dateOfBirth The birth date of the Elf
+     * @param dateOfBirth The birthdate of the Elf
      * @param health The health value of the Elf
      * @param mana The initial mana value of the Elf
-     * @throws IllegalArgumentException if mana is invalid
+     * @throws IllegalArgumentException if a mana is invalid
      */
     public Elf(final String name,
                final Date dateOfBirth,
@@ -41,8 +44,9 @@ public class Elf extends Creature
                int mana)
     {
         super(name,
-                dateOfBirth,
-                health);
+              dateOfBirth,
+              health);
+
         validateMana(mana);
 
         this.mana = mana;
@@ -74,7 +78,9 @@ public class Elf extends Creature
             throw new LowManaException(
                     "Not enough mana to cast spell");
         }
+
         mana -= MANA_DECREMENT;
+
         target.takeDamage(CAST_SPELL_DAMAGE);
     }
 
@@ -93,7 +99,9 @@ public class Elf extends Creature
             throw new IllegalArgumentException(
                     "Mana cannot be negative.");
         }
+
         mana += amount;
+
         if(mana > MAXIMUM_MANA)
         {
             mana = MAXIMUM_MANA;
@@ -109,7 +117,7 @@ public class Elf extends Creature
     private static void validateMana(final int mana)
     {
         if(mana < MINIMUM_MANA ||
-                mana > MAXIMUM_MANA)
+           mana > MAXIMUM_MANA)
         {
             throw new IllegalArgumentException(
                     "Mana must be between 0 and 50.");

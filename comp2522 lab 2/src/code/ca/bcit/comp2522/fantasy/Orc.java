@@ -1,4 +1,4 @@
-import java.util.Date;
+package ca.bcit.comp2522.fantasy;
 
 import java.util.Date;
 
@@ -21,13 +21,15 @@ import java.util.Date;
  */
 public class Orc extends Creature
 {
-    private static final int MINIMUM_RAGE = 0;
-    private static final int MAXIMUM_RAGE = 30;
+    private static final int MINIMUM_RAGE   = 0;
+    private static final int MAXIMUM_RAGE   = 30;
     private static final int RAGE_INCREMENT = 5;
-    private static final int BERSERK_DAMAGE = 15;
+
+    private static final int BERSERK_DAMAGE       = 15;
     private static final int MINIMUM_BERSERK_RAGE = 5;
+
     private static final int DOUBLE_DAMAGE_RAGE = 20;
-    private static final int DOUBLE_DAMAGE = 2;
+    private static final int DOUBLE_DAMAGE      = 2;
 
     private int rage;
 
@@ -36,7 +38,7 @@ public class Orc extends Creature
      * Initializes all attributes and validates rage.
      *
      * @param name The name of the Orc
-     * @param dateOfBirth The birth date of the Orc
+     * @param dateOfBirth The birthdate of the Orc
      * @param health The health value of the Orc
      * @param rage The initial rage value of the Orc
      * @throws IllegalArgumentException if rage is invalid
@@ -44,10 +46,12 @@ public class Orc extends Creature
     public Orc(final String name,
                final Date dateOfBirth,
                int health,
-               int rage) {
+               int rage)
+    {
         super(name,
-                dateOfBirth,
-                health);
+              dateOfBirth,
+              health);
+
         validateRage(rage);
 
         this.rage = rage;
@@ -80,6 +84,7 @@ public class Orc extends Creature
             throw new LowRageException(
                     "Not enough rage to berserk!");
         }
+
         rage += RAGE_INCREMENT;
 
         if(rage > DOUBLE_DAMAGE_RAGE)
@@ -103,7 +108,7 @@ public class Orc extends Creature
     private static void validateRage(final int rage)
     {
         if(rage < MINIMUM_RAGE ||
-                rage > MAXIMUM_RAGE)
+           rage > MAXIMUM_RAGE)
         {
             throw new IllegalArgumentException(
                     "Rage must be between 0 and 30");

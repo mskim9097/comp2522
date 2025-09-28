@@ -1,3 +1,5 @@
+package ca.bcit.comp2522.fantasy;
+
 import java.util.Date;
 
 /**
@@ -16,10 +18,11 @@ import java.util.Date;
  */
 public class Dragon extends Creature {
 
-    private static final int MINIMUM_FIRE_POWER = 0;
-    private static final int MAXIMUM_FIRE_POWER = 100;
-    private static final int FIRE_POWER_DECREMENT= 10;
-    private static final int BREATHE_FIRE_DAGAGE = 20;
+    private static final int MINIMUM_FIRE_POWER   = 0;
+    private static final int MAXIMUM_FIRE_POWER   = 100;
+
+    private static final int FIRE_POWER_DECREMENT = 10;
+    private static final int BREATHE_FIRE_DAMAGE  = 20;
 
     private int firePower;
 
@@ -28,9 +31,9 @@ public class Dragon extends Creature {
      * Validates firePower and initializes the Dragon object.
      *
      * @param name The name of the dragon
-     * @param dateOfBirth The birth date of the dragon
+     * @param dateOfBirth The birthdate of the dragon
      * @param health The health of the dragon
-     * @param firePower The initial fire power of the dragon
+     * @param firePower The initial firepower of the dragon
      * @throws IllegalArgumentException if firePower is invalid
      */
     public Dragon(final String name,
@@ -38,9 +41,8 @@ public class Dragon extends Creature {
                   int health,
                   int firePower)
     {
-        super(name,
-                dateOfBirth,
-                health);
+        super(name, dateOfBirth, health);
+
         validateFirePower(firePower);
 
         this.firePower = firePower;
@@ -64,7 +66,7 @@ public class Dragon extends Creature {
      * @param target The Creature to attack with fire
      * @throws LowFirePowerException if firePower is too low
      */
-    public void breathFire(final Creature target)
+    public void breatheFire(final Creature target)
             throws LowFirePowerException
     {
         if (firePower < FIRE_POWER_DECREMENT)
@@ -72,23 +74,24 @@ public class Dragon extends Creature {
             throw new LowFirePowerException ("Not enough firePower to breathe fire! ");
         }
         firePower -= FIRE_POWER_DECREMENT;
-        target.takeDamage(BREATHE_FIRE_DAGAGE);
+        target.takeDamage(BREATHE_FIRE_DAMAGE);
     }
-
 
     /**
      * Restores the dragon's firepower by a given amount.
      * Firepower is capped at 100.
      *
-     * @param amount The amount of fire power to restore
-     * @throws IllegalArgumentException if amount is negative
+     * @param amount The amount of firepower to restore
+     * @throws IllegalArgumentException if the amount is negative
      */
     public void restoreFirePower(final int amount)
     {
         if (amount < MINIMUM_FIRE_POWER)
         {
-            throw new IllegalArgumentException("Fire power cannot be larger than 100.");
+            throw new IllegalArgumentException(
+                    "Amount cannot be negative.");
         }
+
         firePower += amount;
 
         if(firePower > MAXIMUM_FIRE_POWER)
@@ -101,15 +104,16 @@ public class Dragon extends Creature {
      * Validates the firepower value to ensure it is within
      * the allowed range (0–100).
      *
-     * @param firePower The fire power value to validate
+     * @param firePower The firepower value to validate
      * @throws IllegalArgumentException if firePower is out of range
      */
     private static void validateFirePower(final int firePower)
     {
         if (firePower < MINIMUM_FIRE_POWER ||
-                firePower > MAXIMUM_FIRE_POWER) {
+            firePower > MAXIMUM_FIRE_POWER)
+        {
             throw new IllegalArgumentException(
-                    "Fire power must be between 1 and 100.");
+                    "Fire power must be between 0 and 100.");
         }
     }
 }

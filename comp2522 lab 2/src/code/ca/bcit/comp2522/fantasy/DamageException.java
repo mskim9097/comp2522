@@ -1,3 +1,4 @@
+package ca.bcit.comp2522.fantasy;
 
 /**
  * DamageException is thrown when an invalid damage value is given.

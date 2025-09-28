@@ -1,3 +1,5 @@
+package ca.bcit.comp2522.fantasy;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -16,20 +18,23 @@ public class Creature
 {
     private static final int MINIMUM_HEALTH = 1;
     private static final int MAXIMUM_HEALTH = 100;
+
     private static final int DEAD_HEALTH = 0;
-    private static final int NO_DAMAGE = 0;
-    private static final int NO_HEALING = 0;
+    private static final int NO_DAMAGE   = 0;
+    private static final int NO_HEALING  = 0;
+
+    private static final int ADD_ONE_AFTER_BIRTH = 1;
 
     private final String name;
-    private final Date dateOfBirth;
-    private int health;
+    private final Date   dateOfBirth;
+    private       int    health;
 
     /**
      * Constructor for the Creature class.
      * Validates inputs and sets initial values.
      *
      * @param name The name of the creature (non-null, not empty)
-     * @param dateOfBirth The birth date of the creature (non-null, not in the future)
+     * @param dateOfBirth The birthdate of the creature (non-null, not in the future)
      * @param health The health of the creature (between 1 and 100)
      */
     public Creature(final String name,
@@ -40,9 +45,9 @@ public class Creature
         validateDateOfBirth(dateOfBirth);
         validateHealth(health);
 
-        this.name = name;
+        this.name        = name;
         this.dateOfBirth = dateOfBirth;
-        this.health = health;
+        this.health      = health;
     }
 
     /**
@@ -68,7 +73,9 @@ public class Creature
             throw new DamageException(
                     "Damage cannot be negative.");
         }
+
         health -= damage;
+
         if(health < DEAD_HEALTH)
         {
             health = DEAD_HEALTH;
@@ -89,7 +96,9 @@ public class Creature
             throw new HealingException(
                     "Healing amount cannot be negative.");
         }
+
         health += healAmount;
+
         if(health > MAXIMUM_HEALTH)
         {
             health = MAXIMUM_HEALTH;
@@ -103,18 +112,25 @@ public class Creature
      */
     public int getAgeYears()
     {
-        final Calendar now = Calendar.getInstance();
-        final Calendar birth = Calendar.getInstance();
+        final Calendar now;
+        final Calendar birth;
+        final int age;
+
+        now = Calendar.getInstance();
+        birth = Calendar.getInstance();
         birth.setTime(dateOfBirth);
 
-        int age = now.get(Calendar.YEAR) -
-                birth.get(Calendar.YEAR);
-
-        // if birthdate is in the future, subtract 1
+        // if the birthdate is in the future, subtract 1
         if(now.get(Calendar.DAY_OF_YEAR) <
-                birth.get(Calendar.DAY_OF_YEAR))
+           birth.get(Calendar.DAY_OF_YEAR))
         {
-            age--;
+            age = now.get(Calendar.YEAR) -
+                  birth.get(Calendar.YEAR - ADD_ONE_AFTER_BIRTH);
+        }
+        else
+        {
+            age = now.get(Calendar.YEAR) -
+                  birth.get(Calendar.YEAR);
         }
         return age;
     }
@@ -125,14 +141,20 @@ public class Creature
      */
     public void getDetails()
     {
-        System.out.println("Name: " +
-                name +
-                "\nDate Of Birth: " +
-                dateOfBirth +
-                "\nAge: " +
-                getAgeYears() +
-                "\nHealth: " +
-                health);
+        final StringBuilder details;
+        details = new StringBuilder();
+
+        details.append("\n");
+        details.append("Name: ");
+        details.append(name);
+        details.append("\nDate Of Birth: ");
+        details.append(dateOfBirth);
+        details.append("\nAge: ");
+        details.append(getAgeYears());
+        details.append("\nHealth: ");
+        details.append(health);
+
+        System.out.println(details.toString());
     }
 
     /**
@@ -144,7 +166,7 @@ public class Creature
     private static void validateName(final String name)
     {
         if (name == null ||
-                name.trim().isEmpty())
+            name.trim().isEmpty())
         {
             throw new IllegalArgumentException(
                     "Name cannot be null or empty.");
@@ -163,8 +185,8 @@ public class Creature
 
         now = new Date();
         // can be deleted
-        if (dateOfBirth == null
-                || dateOfBirth.after(now))
+        if (dateOfBirth == null ||
+            dateOfBirth.after(now))
         {
             throw new IllegalArgumentException(
                     "Invalid date of birth.");
@@ -180,7 +202,7 @@ public class Creature
     private static void validateHealth(final int health)
     {
         if (health < MINIMUM_HEALTH ||
-                health > MAXIMUM_HEALTH)
+            health > MAXIMUM_HEALTH)
         {
             throw new IllegalArgumentException(
                     "Health must be between 1 and 100.");

@@ -1,3 +1,4 @@
+package ca.bcit.comp2522.fantasy;
 
 /**
  * LowRageException is thrown when an orc does not have

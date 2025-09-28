@@ -20,16 +20,16 @@ public class BankAccount
     private static final int MAXIMUM_ACCOUNT_NUMBER_LENGTH = 7;
     private static final int MINIMUM_ACCOUNT_NUMBER_LENGTH = 6;
 
-    private static final int NO_BALANCE = 0;
+    private static final int    NO_BALANCE = 0;
+    private static final int    ZERO_PIN   = 0;
     private static final double NO_DEPOSIT = 0.0;
-    private static final int ZERO_PIN = 0;
 
     private final BankClient client;
-    private double balanceUsd;
-    private final int pin;
-    private final String accountNumber;
-    private final Date accountOpened;
-    private final Date accountClosed;
+    private double           balanceUsd;
+    private final int        pin;
+    private final String     accountNumber;
+    private final Date       accountOpened;
+    private final Date       accountClosed;
 
     /**
      * Creating a constructor
@@ -48,16 +48,15 @@ public class BankAccount
                        final Date accountOpened,
                        final Date accountClosed)
     {
-
         validateClient(client);
         validateBalanceUsd(balanceUsd);
         validatePin(pin);
         validateAccountNumber(accountNumber);
         validateAccountOpened(accountOpened);
 
-        this.client = client;
-        this.balanceUsd = balanceUsd;
-        this.pin = pin;
+        this.client        = client;
+        this.balanceUsd    = balanceUsd;
+        this.pin           = pin;
         this.accountNumber = accountNumber;
         this.accountOpened = accountOpened;
         this.accountClosed = accountClosed;
@@ -151,7 +150,7 @@ public class BankAccount
      * @param pinToMatch  the PIN provided by the user, checked against the account's PIN
      */
     public void withdrawUsd(final double amountUsd,
-                            final int pinToMatch)
+                            final int    pinToMatch)
     {
         if (isMatch(pinToMatch))
         {
@@ -181,30 +180,41 @@ public class BankAccount
      */
     public String getDetails()
     {
-        return client.getName().getFullName() +
-                " had $" +
-                balanceUsd +
-                " USD in account #" +
-                accountNumber +
-                " which he opened on " +
-                accountOpened.getDayOfTheWeek() +
-                " " +
-                Date.getMonthName(getAccountOpened().getMonth()) +
-                " " +
-                accountOpened.getDay() +
-                ", " +
-                accountOpened.getYear() +
-                (accountClosed == null ?
-                        " and is still open." :
-                        " and closed " +
-                                accountClosed.getDayOfTheWeek() +
-                                " " +
-                                Date.getMonthName(getAccountClosed().getMonth()) +
-                                " " +
-                                accountClosed.getDay() +
-                                ", " +
-                                accountClosed.getYear() +
-                                ".");
+        final StringBuilder details;
+        details = new StringBuilder();
+
+        details.append(client.getName().getFullName());
+        details.append(" had $");
+        details.append(balanceUsd);
+        details.append(" USD in account #");
+        details.append(accountNumber);
+        details.append(" which he opened on ");
+        details.append(accountOpened.getDayOfTheWeek());
+        details.append(" ");
+        details.append(Date.getMonthName(getAccountOpened().getMonth()));
+        details.append(" ");
+        details.append(accountOpened.getDay());
+        details.append(", ");
+        details.append(accountOpened.getYear());
+
+        if (accountClosed != null)
+        {
+            details.append(" and closed ");
+            details.append(accountClosed.getDayOfTheWeek());
+            details.append(" ");
+            details.append(Date.getMonthName(getAccountClosed().getMonth()));
+            details.append(" ");
+            details.append(accountClosed.getDay());
+            details.append(", ");
+            details.append(accountClosed.getYear());
+            details.append(".");
+        }
+        else
+        {
+            details.append(" and is still open.");
+        }
+
+        return details.toString();
     }
 
     /* Method that checks whether the entered PIN matches the account's PIN. */
@@ -212,8 +222,6 @@ public class BankAccount
     {
         return enteredPin == pin;
     }
-
-
 
     /* Method that validates the client. */
     private static void validateClient(final BankClient client)
@@ -227,7 +235,8 @@ public class BankAccount
     /* Method that validates the balance. */
     private static void validateBalanceUsd(final double balanceUsd)
     {
-        if (balanceUsd < NO_BALANCE) {
+        if (balanceUsd < NO_BALANCE)
+        {
             throw new IllegalArgumentException("Invalid balance");
         }
     }
@@ -235,7 +244,8 @@ public class BankAccount
     /* method that validates the PIN. */
     private static void validatePin(final int pin)
     {
-        if (pin < ZERO_PIN) {
+        if (pin < ZERO_PIN)
+        {
             throw new IllegalArgumentException("Invalid pin");
         }
     }
@@ -244,8 +254,9 @@ public class BankAccount
     private static void validateAccountNumber(final String accountNumber)
     {
         if (accountNumber == null ||
-                accountNumber.length() < MINIMUM_ACCOUNT_NUMBER_LENGTH ||
-                accountNumber.length() > MAXIMUM_ACCOUNT_NUMBER_LENGTH) {
+            accountNumber.length() < MINIMUM_ACCOUNT_NUMBER_LENGTH ||
+            accountNumber.length() > MAXIMUM_ACCOUNT_NUMBER_LENGTH)
+        {
             throw new IllegalArgumentException("Invalid account number");
         }
     }
@@ -253,9 +264,9 @@ public class BankAccount
     /* method that validates the account opened date. */
     private static void validateAccountOpened(final Date accountOpened)
     {
-        if (accountOpened == null) {
+        if (accountOpened == null)
+        {
             throw new IllegalArgumentException("Invalid account");
         }
     }
-
 }

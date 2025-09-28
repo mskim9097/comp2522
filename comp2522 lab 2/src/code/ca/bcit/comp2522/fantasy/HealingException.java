@@ -1,3 +1,4 @@
+package ca.bcit.comp2522.fantasy;
 
 /**
  * HealingException is thrown when an invalid healing value is given.

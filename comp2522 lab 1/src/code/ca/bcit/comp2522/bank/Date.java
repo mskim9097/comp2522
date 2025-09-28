@@ -22,10 +22,11 @@ package ca.bcit.comp2522.bank;
  */
 public class Date
 {
+    private static final int CURRENT_YEAR        = 2025;
     private static final int FIRST_YEAR_OF_1900S = 1900;
     private static final int FIRST_YEAR_OF_2000S = 2000;
+    private static final int MINIMUM_YEAR        = 1800;
 
-    private static final int CURRENT_YEAR = 2025;
     private static final int MAXIMUM_DAYS_IN_LEAP_YEAR     = 29;
     private static final int MAXIMUM_DAYS_IN_NON_LEAP_YEAR = 28;
     private static final int MAXIMUM_DAYS_IN_JANUARY       = 31;
@@ -35,15 +36,9 @@ public class Date
     private static final int LEAP_YEAR_DIVISOR_100 = 100;
     private static final int LEAP_YEAR_DIVISOR_4   = 4;
 
-    private static final int NO_OFFSET = 0;
-    private static final int FIRST_DAY_OF_MONTH = 1;
-    private static final int OFFSET_FOR_1800S = 2;
-    private static final int YEARS_DIVISOR_4 = 4;
-    private static final int CENTURY_OFFSET_2000S = 6;
-    private static final int DAYS_PER_WEEK = 7;
-    private static final int MONTHS_PER_YEAR = 12;
-    private static final int YEARS_PER_CENTURY = 100;
-    private static final int MINIMUM_YEAR = 1800;
+    private static final int DAYS_PER_WEEK      = 7;
+    private static final int MONTHS_PER_YEAR    = 12;
+    private static final int YEARS_PER_CENTURY  = 100;
 
     private static final int  SUNDAY    = 1;
     private static final int  MONDAY    = 2;
@@ -52,33 +47,38 @@ public class Date
     private static final int  THURSDAY  = 5;
     private static final int  FRIDAY    = 6;
 
-    private static final int JANUARY_CODE = 1;
-    private static final int FEBRUARY_CODE = 4;
-    private static final int MARCH_CODE = 4;
-    private static final int APRIL_CODE = 0;
-    private static final int MAY_CODE = 2;
-    private static final int JUNE_CODE = 5;
-    private static final int JULY_CODE = 0;
-    private static final int AUGUST_CODE = 3;
+    private static final int JANUARY_CODE   = 1;
+    private static final int FEBRUARY_CODE  = 4;
+    private static final int MARCH_CODE     = 4;
+    private static final int APRIL_CODE     = 0;
+    private static final int MAY_CODE       = 2;
+    private static final int JUNE_CODE      = 5;
+    private static final int JULY_CODE      = 0;
+    private static final int AUGUST_CODE    = 3;
     private static final int SEPTEMBER_CODE = 6;
-    private static final int OCTOBER_CODE = 1;
-    private static final int NOVEMBER_CODE = 4;
-    private static final int DECEMBER_CODE = 6;
+    private static final int OCTOBER_CODE   = 1;
+    private static final int NOVEMBER_CODE  = 4;
+    private static final int DECEMBER_CODE  = 6;
 
-    private static final int LEAP_YEAR_DEFAULT = 0;
+    private static final int NO_OFFSET            = 0;
+    private static final int LEAP_YEAR_DEFAULT    = 0;
+    private static final int FIRST_DAY_OF_MONTH   = 1;
+    private static final int OFFSET_FOR_1800S     = 2;
+    private static final int YEARS_DIVISOR_4      = 4;
+    private static final int CENTURY_OFFSET_2000S = 6;
 
-    public static final int JANUARY = 1;
-    public static final int FEBRUARY = 2;
-    public static final int MARCH = 3;
-    public static final int APRIL = 4;
-    public static final int MAY = 5;
-    public static final int JUNE = 6;
-    public static final int JULY = 7;
-    public static final int AUGUST = 8;
+    public static final int JANUARY   = 1;
+    public static final int FEBRUARY  = 2;
+    public static final int MARCH     = 3;
+    public static final int APRIL     = 4;
+    public static final int MAY       = 5;
+    public static final int JUNE      = 6;
+    public static final int JULY      = 7;
+    public static final int AUGUST    = 8;
     public static final int SEPTEMBER = 9;
-    public static final int OCTOBER = 10;
-    public static final int NOVEMBER = 11;
-    public static final int DECEMBER = 12;
+    public static final int OCTOBER   = 10;
+    public static final int NOVEMBER  = 11;
+    public static final int DECEMBER  = 12;
 
     private final int year;
     private final int month;
@@ -104,9 +104,9 @@ public class Date
         validateMonth(month);
         validateDay(day, month, year);
 
-        this.year = year;
+        this.year  = year;
         this.month = month;
-        this.day = day;
+        this.day   = day;
     }
 
     /**
@@ -146,7 +146,16 @@ public class Date
      */
     public String getYyyyMmDd()
     {
-        return String.format("%04d-%02d-%02d", year, month, day);
+        final StringBuilder yyyyMmDd;
+        yyyyMmDd = new StringBuilder();
+
+        yyyyMmDd.append(year);
+        yyyyMmDd.append("-");
+        yyyyMmDd.append(month);
+        yyyyMmDd.append("-");
+        yyyyMmDd.append(day);
+
+        return yyyyMmDd.toString();
     }
 
     /**
@@ -182,13 +191,11 @@ public class Date
         final int total;
         final int leapYearOffset;
 
-        offset = getCenturyOffset(year);
-
-        yearPart = year % YEARS_PER_CENTURY;
-        twelves = yearPart / MONTHS_PER_YEAR;
+        offset    = getCenturyOffset(year);
+        yearPart  = year % YEARS_PER_CENTURY;
+        twelves   = yearPart / MONTHS_PER_YEAR;
         remainder = yearPart - (twelves * MONTHS_PER_YEAR);
-        fours = remainder / YEARS_DIVISOR_4;
-
+        fours     = remainder / YEARS_DIVISOR_4;
 
         if(month == JANUARY)
         {
@@ -250,41 +257,45 @@ public class Date
         }
 
         total = (leapYearOffset +
-                monthCode +
-                offset +
-                twelves +
-                remainder +
-                fours +
-                day) % DAYS_PER_WEEK;
+                 monthCode +
+                 offset +
+                 twelves +
+                 remainder +
+                 fours +
+                 day) % DAYS_PER_WEEK;
 
-        if( total == SUNDAY )
+        final String theDay;
+
+        if(total == SUNDAY)
         {
-            return "Sunday";
+            theDay = "Sunday";
         }
-        else if( total == MONDAY )
+        else if(total == MONDAY)
         {
-            return "Monday";
+            theDay = "Monday";
         }
-        else if( total == TUESDAY )
+        else if(total == TUESDAY)
         {
-            return "Tuesday";
+            theDay = "Tuesday";
         }
-        else if( total == WEDNESDAY )
+        else if(total == WEDNESDAY)
         {
-            return "Wednesday";
+            theDay = "Wednesday";
         }
-        else if( total == THURSDAY )
+        else if(total == THURSDAY)
         {
-            return "Thursday";
+            theDay = "Thursday";
         }
-        else if( total == FRIDAY )
+        else if(total == FRIDAY)
         {
-            return "Friday";
+            theDay = "Friday";
         }
         else
         {
-            return "Saturday";
+            theDay = "Saturday";
         }
+
+        return theDay;
     }
 
     /* Method that returns the month name. */
@@ -292,7 +303,7 @@ public class Date
     {
         final String monthName;
 
-        if (inputMonth == Date.JANUARY)
+        if      (inputMonth == Date.JANUARY)
         {
             monthName = "January";
         }
@@ -347,55 +358,64 @@ public class Date
     /* The method that calculates the century offset. */
     private int getCenturyOffset(final int year)
     {
-        if (year >= FIRST_YEAR_OF_2000S)
+        final int offSet;
+
+        if      (year >= FIRST_YEAR_OF_2000S)
         {
-            return CENTURY_OFFSET_2000S;
+            offSet = CENTURY_OFFSET_2000S;
         }
         else if (year >= FIRST_YEAR_OF_1900S)
         {
-            return NO_OFFSET;
+            offSet = NO_OFFSET;
         }
         else
         {
-            return OFFSET_FOR_1800S; // for 1800s
+            offSet =  OFFSET_FOR_1800S; // for 1800s
         }
+
+        return offSet;
     }
 
     /* The method that checks whether the given year is a leap year. */
     private static boolean isLeapYear(final int year)
     {
-        return (year % LEAP_YEAR_DIVISOR_4 == NO_OFFSET)
-                && (year % LEAP_YEAR_DIVISOR_100 != NO_OFFSET)
-                || (year % LEAP_YEAR_DIVISOR_400 == NO_OFFSET);
+        return (year % LEAP_YEAR_DIVISOR_4 == NO_OFFSET) &&
+               (year % LEAP_YEAR_DIVISOR_100 != NO_OFFSET) ||
+               (year % LEAP_YEAR_DIVISOR_400 == NO_OFFSET);
     }
 
     /* The method that calculates the maximum number of days in a month. */
     private static int maxDayInMonth(final int year,
-                                     final int month) {
+                                     final int month)
+    {
+        final int maxDay;
+
         if (month == APRIL     ||
             month == JUNE      ||
             month == SEPTEMBER ||
             month == NOVEMBER)
         {
-            return MAXIMUM_DAYS_IN_APRIL;
+            maxDay = MAXIMUM_DAYS_IN_APRIL;
         }
         else if (month == FEBRUARY)
         {
-            return isLeapYear(year) ?
-                    MAXIMUM_DAYS_IN_LEAP_YEAR :
-                    MAXIMUM_DAYS_IN_NON_LEAP_YEAR;
+            maxDay = isLeapYear(year) ?
+                     MAXIMUM_DAYS_IN_LEAP_YEAR :
+                     MAXIMUM_DAYS_IN_NON_LEAP_YEAR;
         }
         else
         {
-            return MAXIMUM_DAYS_IN_JANUARY;
+            maxDay = MAXIMUM_DAYS_IN_JANUARY;
         }
+
+        return maxDay;
     }
 
     /* Method to validate the year. */
     private static void validateYear(final int year)
     {
         if (year < MINIMUM_YEAR ||
-                year > CURRENT_YEAR)
+            year > CURRENT_YEAR)
         {
             throw new IllegalArgumentException("Invalid year");
         }
@@ -405,7 +425,7 @@ public class Date
     private static void validateMonth(final int month)
     {
         if (month < JANUARY ||
-                month > DECEMBER)
+            month > DECEMBER)
         {
             throw new IllegalArgumentException("Invalid month");
         }
@@ -417,7 +437,7 @@ public class Date
                                     final int year)
     {
         if (day < FIRST_DAY_OF_MONTH ||
-                day > maxDayInMonth(year, month))
+            day > maxDayInMonth(year, month))
         {
             throw new IllegalArgumentException("Invalid day");
         }

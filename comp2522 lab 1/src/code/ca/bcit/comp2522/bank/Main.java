@@ -15,7 +15,7 @@ public class Main
      * Firstly, it creates four {@link Name} objects for Albert Einstein,
      * Nelson Mandela, Frida Kahlo, and Jackie Chan.
      * Secondly, it uses those names to create four {@link BankClient}
-     * objects with their birth dates, death dates (if any), signup dates,
+     * objects with their birthdates, death dates (if any), signup dates,
      * and client IDs.
      * Thirdly, it creates four {@link BankAccount} objects for those clients,
      * giving each account a starting balance, a PIN, and an account number,
@@ -26,7 +26,6 @@ public class Main
      */
     public static void main(final String[] args)
     {
-
         final Name n1;
         final Name n2;
         final Name n3;
@@ -34,7 +33,7 @@ public class Main
 
         n1 = new Name("Albert", "Einstein");
         n2 = new Name("Nelson", "Mandela");
-        n3 = new Name("Frida", "Kahlo");
+        n3 = new Name("Frida",  "Kahlo");
         n4 = new Name("Jackie", "Chan");
 
         final BankClient c1;
@@ -46,26 +45,26 @@ public class Main
                 n1,
                 new Date(1879, 3, 14),
                 new Date(1955, 4, 18),
-                new Date(1900, 1, 1),
+                new Date(1900, 1,  1),
                 "abc123"
         );
         c2 = new BankClient(
                 n2,
-                new Date(1918, 7, 18),
-                new Date(2013, 12, 5),
+                new Date(1918, 7 , 18),
+                new Date(2013, 12,  5),
                 new Date(1994, 5 , 10),
                 "654321"
         );
         c3 = new BankClient(
                 n3,
-                new Date(1907, 7, 6),
+                new Date(1907, 7,  6),
                 new Date(1954, 7, 13),
-                new Date(1940, 1, 1),
+                new Date(1940, 1,  1),
                 "frd123"
         );
         c4 = new BankClient(
                 n4,
-                new Date(1954, 4, 7),
+                new Date(1954, 4 , 7),
                 null,
                 new Date(1980, 10, 1),
                 "chan789"
