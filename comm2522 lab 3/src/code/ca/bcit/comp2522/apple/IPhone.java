@@ -11,6 +11,10 @@ public class IPhone extends IDevice
                   final String carrier)
     {
         super("talking");
+
+        validateMinutesRemaining(minutesRemaining);
+        validateCarrier(carrier);
+
         this.minutesRemaining = minutesRemaining;
         this.carrier = carrier;
     }
@@ -18,6 +22,11 @@ public class IPhone extends IDevice
     public final double getMinutesRemaining()
     {
         return minutesRemaining;
+    }
+
+    public final String getCarrier()
+    {
+        return carrier;
     }
 
     @Override
@@ -72,5 +81,21 @@ public class IPhone extends IDevice
     public int hashCode()
     {
         return Objects.hashCode(minutesRemaining);
+    }
+
+    private static void validateMinutesRemaining(final double minutesRemaining)
+    {
+        if(minutesRemaining < 0.0)
+        {
+            throw new IllegalArgumentException("Invalid minutes remaining");
+        }
+    }
+
+    private static void validateCarrier(final String carrier)
+    {
+        if(carrier == null || carrier.isBlank())
+        {
+            throw new IllegalArgumentException("Invalid carrier");
+        }
     }
 }

@@ -5,14 +5,27 @@ import java.util.Objects;
 public class IPad extends IDevice
 {
     private final boolean hasCase;
-    private final String version;
+    private final String osVersion;
 
     public IPad(final boolean hasCase,
-                final String version)
+                final String osVersion)
     {
         super("learning");
+
+        validateOsVersion(osVersion);
+
         this.hasCase = hasCase;
-        this.version = version;
+        this.osVersion = osVersion;
+    }
+
+    public final boolean isHasCase()
+    {
+        return hasCase;
+    }
+
+    public final String getOsVersion()
+    {
+        return osVersion;
     }
 
     @Override
@@ -32,7 +45,7 @@ public class IPad extends IDevice
         sb.append(hasCase);
         sb.append("\n");
         sb.append("Operating system version: ");
-        sb.append(version);
+        sb.append(osVersion);
 
         return sb.toString();
     }
@@ -58,13 +71,20 @@ public class IPad extends IDevice
         final IPad ipad;
         ipad = (IPad) o;
 
-        return this.version.equalsIgnoreCase(ipad.version);
+        return this.osVersion.equalsIgnoreCase(ipad.osVersion);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hashCode(version);
+        return Objects.hashCode(osVersion);
     }
 
+    private static void validateOsVersion(final String osVersion)
+    {
+        if(osVersion == null || osVersion.isBlank())
+        {
+            throw new IllegalArgumentException("Invalid operating system version");
+        }
+    }
 }

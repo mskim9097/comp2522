@@ -5,20 +5,34 @@ import java.util.Objects;
 public class IPod extends IDevice
 {
     private final int numberOfSongs;
-    private final double maximumVolumeDb;
+    private final double maximumVolumeDB;
 
     public IPod(final int numberOfSongs,
-                final double maximumVolumeDb)
+                final double maximumVolumeDB)
     {
         super("music");
+
+        validateNumberOfSongs(numberOfSongs);
+        validateMaximumVolumeDB(maximumVolumeDB);
+
         this.numberOfSongs = numberOfSongs;
-        this.maximumVolumeDb = maximumVolumeDb;
+        this.maximumVolumeDB = maximumVolumeDB;
     }
 
     @Override
     public void printDetails()
     {
         System.out.println(toString());
+    }
+
+    public final int getNumberOfSongs()
+    {
+        return numberOfSongs;
+    }
+
+    public final double getMaximumVolumeDB()
+    {
+        return maximumVolumeDB;
     }
 
     @Override
@@ -33,7 +47,7 @@ public class IPod extends IDevice
         sb.append(numberOfSongs);
         sb.append("\n");
         sb.append("Maximum volume in decibels: ");
-        sb.append(maximumVolumeDb);
+        sb.append(maximumVolumeDB);
 
         return sb.toString();
     }
@@ -66,5 +80,21 @@ public class IPod extends IDevice
     public int hashCode()
     {
         return Objects.hashCode(numberOfSongs);
+    }
+
+    private static void validateNumberOfSongs(final int numberOfSongs)
+    {
+        if(numberOfSongs < 0)
+        {
+            throw new IllegalArgumentException("Invalid number of songs");
+        }
+    }
+
+    private static void validateMaximumVolumeDB(final double maximumVolumeDB)
+    {
+        if(maximumVolumeDB < 0)
+        {
+            throw new IllegalArgumentException("Invalid maximum volume in decibels");
+        }
     }
 }

@@ -5,16 +5,27 @@ import java.util.Objects;
 public final class IPhone16 extends IPhone
 {
     private final boolean highResolutionCamera;
-    private final int memoryGb;
+    private final int memoryGB;
 
     public IPhone16(final double minutesRemaining,
                     final String carrier,
                     final boolean highResolutionCamera,
-                    final int memoryGb)
+                    final int memoryGB)
     {
         super(minutesRemaining, carrier);
+
+        validateMemoryGB(memoryGB);
+
         this.highResolutionCamera = highResolutionCamera;
-        this.memoryGb = memoryGb;
+        this.memoryGB = memoryGB;
+    }
+
+    public final boolean isHighResolutionCamera() {
+        return highResolutionCamera;
+    }
+
+    public final int getMemoryGb() {
+        return memoryGB;
     }
 
     @Override
@@ -28,7 +39,7 @@ public final class IPhone16 extends IPhone
         sb.append(highResolutionCamera);
         sb.append("\n");
         sb.append("Memory: ");
-        sb.append(memoryGb);
+        sb.append(memoryGB);
         sb.append(" GB");
 
         return sb.toString();
@@ -55,11 +66,9 @@ public final class IPhone16 extends IPhone
         final IPhone16 sixteen;
         sixteen = (IPhone16) o;
 
-        return Double.compare(
-                this.getMinutesRemaining(),
-                sixteen.getMinutesRemaining()) == 0 &&
-                this.highResolutionCamera ==
-                sixteen.highResolutionCamera;
+        return super.equals(o) &&
+               this.highResolutionCamera ==
+               sixteen.highResolutionCamera;
     }
 
     @Override
@@ -67,5 +76,13 @@ public final class IPhone16 extends IPhone
     {
         return Objects.hash(getMinutesRemaining(),
                 highResolutionCamera);
+    }
+
+    private static void validateMemoryGB(final int memoryGB)
+    {
+        if(memoryGB < 0)
+        {
+            throw new IllegalArgumentException("Invalid memory in GB");
+        }
     }
 }
