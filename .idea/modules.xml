@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/comp2522.iml" filepath="$PROJECT_DIR$/.idea/comp2522.iml" />
+      <module fileurl="file://$PROJECT_DIR$/comp2522 lab 1/comp2522 lab 1.iml" filepath="$PROJECT_DIR$/comp2522 lab 1/comp2522 lab 1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/comp2522 lab 2/comp2522 lab 2.iml" filepath="$PROJECT_DIR$/comp2522 lab 2/comp2522 lab 2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/comp2522 lab3/comp2522 lab3.iml" filepath="$PROJECT_DIR$/comp2522 lab3/comp2522 lab3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lecture/lecture.iml" filepath="$PROJECT_DIR$/lecture/lecture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson 1 sept 4 2025/lesson 1 sept 4 2025.iml" filepath="$PROJECT_DIR$/lesson 1 sept 4 2025/lesson 1 sept 4 2025.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson 3/lesson 3.iml" filepath="$PROJECT_DIR$/lesson 3/lesson 3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson 4/lesson 4.iml" filepath="$PROJECT_DIR$/lesson 4/lesson 4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson 5/lesson 5.iml" filepath="$PROJECT_DIR$/lesson 5/lesson 5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lecture/lesson1/lesson1.iml" filepath="$PROJECT_DIR$/lecture/lesson1/lesson1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson2/lesson2.iml" filepath="$PROJECT_DIR$/lesson2/lesson2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
+    </modules>
+  </component>
+</project>
