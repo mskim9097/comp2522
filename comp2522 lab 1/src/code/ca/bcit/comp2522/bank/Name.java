@@ -16,6 +16,8 @@ public class Name
 {
     private static final int    MAXIMUM_ALLOWED_NAME_LENGTH = 99;
     private static final String FORBIDDEN_USERNAME          = "admin";
+    private static final int    FIRST_INDEX                 = 0;
+    private static final int    SECOND_INDEX                  = 1;
 
     private final String first;
     private final String last;
@@ -69,9 +71,9 @@ public class Name
         final StringBuilder initialName;
         initialName = new StringBuilder();
 
-        initialName.append(first.trim().substring(0, 1).toUpperCase());
+        initialName.append(first.trim().substring(FIRST_INDEX, SECOND_INDEX).toUpperCase());
         initialName.append(".");
-        initialName.append(last.trim().substring(0, 1).toUpperCase());
+        initialName.append(last.trim().substring(FIRST_INDEX, SECOND_INDEX).toUpperCase());
         initialName.append(".");
 
         return initialName.toString();
@@ -89,11 +91,11 @@ public class Name
         final StringBuilder fullName;
         fullName = new StringBuilder();
 
-        fullName.append(first.trim().substring(0, 1).toUpperCase());
-        fullName.append(first.trim().substring(1).toLowerCase());
+        fullName.append(first.trim().substring(FIRST_INDEX, SECOND_INDEX).toUpperCase());
+        fullName.append(first.trim().substring(SECOND_INDEX).toLowerCase());
         fullName.append(" ");
-        fullName.append(last.trim().substring(0, 1).toUpperCase());
-        fullName.append(last.trim().substring(1).toLowerCase());
+        fullName.append(last.trim().substring(FIRST_INDEX, SECOND_INDEX).toUpperCase());
+        fullName.append(last.trim().substring(SECOND_INDEX).toLowerCase());
 
         return fullName.toString();
     }

@@ -16,8 +16,8 @@ import java.util.Date;
  */
 public class Creature
 {
-    private static final int MINIMUM_HEALTH = 1;
-    private static final int MAXIMUM_HEALTH = 100;
+    private static final int MINIMUM_HEALTH = 55;
+    private static final int MAXIMUM_HEALTH = 1000
 
     private static final int DEAD_HEALTH = 0;
     private static final int NO_DAMAGE   = 0;

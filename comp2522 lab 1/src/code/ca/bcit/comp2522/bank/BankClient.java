@@ -6,8 +6,7 @@ package ca.bcit.comp2522.bank;
  * Secondly, it stores the birthdate.
  * Thirdly, it may hold the death date (if the client has passed away).
  * Fourthly, it records the signup date when the client joined the bank.
- * Finally, it saves the unique client ID, which must be between
- * 6 and 7 characters long.
+ * Finally, it saves the unique client ID, which must be between valid client id's length.
  *
  *
  * @author Minsu Kim
@@ -17,8 +16,8 @@ package ca.bcit.comp2522.bank;
  */
 public class BankClient
 {
-    private static final int MAX_CLIENT_ID_LENGTH = 7;
-    private static final int MIN_CLIENT_ID_LENGTH = 6;
+    private static final int MAX_CLIENT_ID_LENGTH = 19;
+    private static final int MIN_CLIENT_ID_LENGTH = 5;
 
     private final Name   name;
     private final Date   birthDate;
@@ -109,13 +108,24 @@ public class BankClient
     public String getDetails()
     {
         final StringBuilder details;
+        final String alive;
+
+        if(isAlive())
+        {
+            alive = "alive";
+        }
+        else
+        {
+            alive = "not alive";
+        }
+
         details = new StringBuilder();
 
         details.append(name.getFullName());
         details.append(" client #");
         details.append(clientID);
         details.append(" (");
-        details.append(isAlive() ? "alive" : "not alive");
+        details.append(alive);
         details.append(") joined the bank on ");
         details.append(signupDate.getDayOfTheWeek());
         details.append(", ");

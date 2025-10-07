@@ -1,5 +1,18 @@
 package ca.bcit.comp2522.apple;
 
+/**
+ * The Main class runs the Lab 3 program.
+ * <p>
+ * It creates objects for each type of iDevice (IPod, IPad, IPhone, IPhone16)
+ * and then tests their equality rules by printing results to the console.
+ * </p>
+ *
+ * @author Minsu Kim
+ * @author Hali Imanpanah
+ * @author Esin Sahutoglu
+ *
+ * @version 1.0
+ */
 public class Main
 {
     public static void main(final String[] args)

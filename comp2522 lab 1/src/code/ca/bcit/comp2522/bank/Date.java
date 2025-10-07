@@ -32,9 +32,9 @@ public class Date
     private static final int MAXIMUM_DAYS_IN_JANUARY       = 31;
     private static final int MAXIMUM_DAYS_IN_APRIL         = 30;
 
-    private static final int LEAP_YEAR_DIVISOR_400 = 400;
-    private static final int LEAP_YEAR_DIVISOR_100 = 100;
-    private static final int LEAP_YEAR_DIVISOR_4   = 4;
+    private static final int LEAP_YEAR_DIVISOR_FOUR_HUNDRED = 400;
+    private static final int LEAP_YEAR_DIVISOR_HUNDRED = 100;
+    private static final int LEAP_YEAR_DIVISOR_FOUR   = 4;
 
     private static final int DAYS_PER_WEEK      = 7;
     private static final int MONTHS_PER_YEAR    = 12;
@@ -62,23 +62,26 @@ public class Date
 
     private static final int NO_OFFSET            = 0;
     private static final int LEAP_YEAR_DEFAULT    = 0;
+    private static final int MONTH_OFFSET         = 1;
     private static final int FIRST_DAY_OF_MONTH   = 1;
     private static final int OFFSET_FOR_1800S     = 2;
     private static final int YEARS_DIVISOR_4      = 4;
     private static final int CENTURY_OFFSET_2000S = 6;
+    private static final int MAXIMUM_MONTH        = 12;
+    private static final int MINIMUM_MONTH        = 1;
 
-    public static final int JANUARY   = 1;
-    public static final int FEBRUARY  = 2;
-    public static final int MARCH     = 3;
-    public static final int APRIL     = 4;
-    public static final int MAY       = 5;
-    public static final int JUNE      = 6;
-    public static final int JULY      = 7;
-    public static final int AUGUST    = 8;
-    public static final int SEPTEMBER = 9;
-    public static final int OCTOBER   = 10;
-    public static final int NOVEMBER  = 11;
-    public static final int DECEMBER  = 12;
+    public static final int JANUARY   = 0;
+    public static final int FEBRUARY  = 1;
+    public static final int MARCH     = 2;
+    public static final int APRIL     = 3;
+    public static final int MAY       = 4;
+    public static final int JUNE      = 5;
+    public static final int JULY      = 6;
+    public static final int AUGUST    = 7;
+    public static final int SEPTEMBER = 8;
+    public static final int OCTOBER   = 9;
+    public static final int NOVEMBER  = 10;
+    public static final int DECEMBER  = 11;
 
     private final int year;
     private final int month;
@@ -93,7 +96,8 @@ public class Date
      * Finally, it assigns the values to the fields.
      *
      * @param year  the year (must be valid and not less than the minimum allowed)
-     * @param month the month of the year (1 = January, 12 = December)
+     * @param month the month of the year (JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE,
+     *              JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, or DECEMBER)
      * @param day   the day of the month (must match the rules for the given month and year)
      */
     public Date(final int year,
@@ -190,54 +194,56 @@ public class Date
         final int monthCode;
         final int total;
         final int leapYearOffset;
+        final int monthOffset;
 
+        monthOffset = month - MONTH_OFFSET;
         offset    = getCenturyOffset(year);
         yearPart  = year % YEARS_PER_CENTURY;
         twelves   = yearPart / MONTHS_PER_YEAR;
         remainder = yearPart - (twelves * MONTHS_PER_YEAR);
         fours     = remainder / YEARS_DIVISOR_4;
 
-        if(month == JANUARY)
+        if(monthOffset == JANUARY)
         {
             monthCode = JANUARY_CODE;
         }
-        else if(month == FEBRUARY)
+        else if(monthOffset == FEBRUARY)
         {
             monthCode = FEBRUARY_CODE;
         }
-        else if(month == MARCH)
+        else if(monthOffset == MARCH)
         {
             monthCode = MARCH_CODE;
         }
-        else if(month == APRIL)
+        else if(monthOffset == APRIL)
         {
             monthCode = APRIL_CODE;
         }
-        else if(month == MAY)
+        else if(monthOffset == MAY)
         {
             monthCode = MAY_CODE;
         }
-        else if(month == JUNE)
+        else if(monthOffset == JUNE)
         {
             monthCode = JUNE_CODE;
         }
-        else if(month == JULY)
+        else if(monthOffset == JULY)
         {
             monthCode = JULY_CODE;
         }
-        else if(month == AUGUST)
+        else if(monthOffset == AUGUST)
         {
             monthCode = AUGUST_CODE;
         }
-        else if(month == SEPTEMBER)
+        else if(monthOffset == SEPTEMBER)
         {
             monthCode = SEPTEMBER_CODE;
         }
-        else if(month == OCTOBER)
+        else if(monthOffset == OCTOBER)
         {
             monthCode = OCTOBER_CODE;
         }
-        else if(month == NOVEMBER)
+        else if(monthOffset == NOVEMBER)
         {
             monthCode = NOVEMBER_CODE;
         }
@@ -302,48 +308,51 @@ public class Date
     public static String getMonthName(final int inputMonth)
     {
         final String monthName;
+        final int monthOffset;
 
-        if      (inputMonth == Date.JANUARY)
+        monthOffset = inputMonth - MONTH_OFFSET;
+
+        if      (monthOffset == Date.JANUARY)
         {
             monthName = "January";
         }
-        else if (inputMonth == Date.FEBRUARY)
+        else if (monthOffset == Date.FEBRUARY)
         {
             monthName = "February";
         }
-        else if (inputMonth == Date.MARCH)
+        else if (monthOffset == Date.MARCH)
         {
             monthName = "March";
         }
-        else if (inputMonth == Date.APRIL)
+        else if (monthOffset == Date.APRIL)
         {
             monthName = "April";
         }
-        else if (inputMonth == Date.MAY)
+        else if (monthOffset == Date.MAY)
         {
             monthName = "May";
         }
-        else if (inputMonth == Date.JUNE)
+        else if (monthOffset == Date.JUNE)
         {
             monthName = "June";
         }
-        else if (inputMonth == Date.JULY)
+        else if (monthOffset == Date.JULY)
         {
             monthName = "July";
         }
-        else if (inputMonth == Date.AUGUST)
+        else if (monthOffset == Date.AUGUST)
         {
             monthName = "August";
         }
-        else if (inputMonth == Date.SEPTEMBER)
+        else if (monthOffset == Date.SEPTEMBER)
         {
             monthName = "September";
         }
-        else if (inputMonth == Date.OCTOBER)
+        else if (monthOffset == Date.OCTOBER)
         {
             monthName = "October";
         }
-        else if (inputMonth == Date.NOVEMBER)
+        else if (monthOffset == Date.NOVEMBER)
         {
             monthName = "November";
         }
@@ -379,9 +388,9 @@ public class Date
     /* The method that checks whether the given year is a leap year. */
     private static boolean isLeapYear(final int year)
     {
-        return (year % LEAP_YEAR_DIVISOR_4 == NO_OFFSET) &&
-               (year % LEAP_YEAR_DIVISOR_100 != NO_OFFSET) ||
-               (year % LEAP_YEAR_DIVISOR_400 == NO_OFFSET);
+        return (year % LEAP_YEAR_DIVISOR_FOUR == NO_OFFSET) &&
+               (year % LEAP_YEAR_DIVISOR_HUNDRED != NO_OFFSET) ||
+               (year % LEAP_YEAR_DIVISOR_FOUR_HUNDRED == NO_OFFSET);
     }
 
     /* The method that calculates the maximum number of days in a month. */
@@ -424,8 +433,8 @@ public class Date
     /* Method to validate the month. */
     private static void validateMonth(final int month)
     {
-        if (month < JANUARY ||
-            month > DECEMBER)
+        if (month < MINIMUM_MONTH  ||
+            month > MAXIMUM_MONTH)
         {
             throw new IllegalArgumentException("Invalid month");
         }

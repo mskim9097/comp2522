@@ -5,7 +5,7 @@ package ca.bcit.comp2522.bank;
  * Firstly, it keeps a reference to the {@link BankClient} who owns the account.
  * Secondly, it stores the account balance in USD.
  * Thirdly, it protects the account with a personal identification number (PIN).
- * Fourthly, it keeps the account number, which must be 6 to 7 digits long.
+ * Fourthly, it keeps the account number, which must be between valid account number's length.
  * Fifthly, it records the date when the account was opened.
  * Finally, it may hold the date when the account was closed
  * (or remain null if the account is still active).
@@ -36,7 +36,7 @@ public class BankAccount
      *
      * @param client the BankClient associated with this account.
      * @param balanceUsd the initial balance of the account in USD.
-     * @param pin the 4-digit Personal Information Number (PIN) for an account.
+     * @param pin the Personal Information Number (PIN) for an account.
      * @param accountNumber client's bank account number.
      * @param accountOpened account opened date of the account.
      * @param accountClosed account closed date of the account.
