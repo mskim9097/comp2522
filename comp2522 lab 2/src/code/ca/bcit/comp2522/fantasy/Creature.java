@@ -17,13 +17,13 @@ import java.util.Date;
 public class Creature
 {
     private static final int MINIMUM_HEALTH = 55;
-    private static final int MAXIMUM_HEALTH = 1000
+    private static final int MAXIMUM_HEALTH = 1000;
 
     private static final int DEAD_HEALTH = 0;
     private static final int NO_DAMAGE   = 0;
     private static final int NO_HEALING  = 0;
 
-    private static final int ADD_ONE_AFTER_BIRTH = 1;
+    private static final int ADD_ONE_IF_AFTER_BIRTH = 1;
 
     private final String name;
     private final Date   dateOfBirth;
@@ -35,7 +35,7 @@ public class Creature
      *
      * @param name The name of the creature (non-null, not empty)
      * @param dateOfBirth The birthdate of the creature (non-null, not in the future)
-     * @param health The health of the creature (between 1 and 100)
+     * @param health The health of the creature between valid minimum health and maximum health
      */
     public Creature(final String name,
                     final Date dateOfBirth,
@@ -125,7 +125,7 @@ public class Creature
            birth.get(Calendar.DAY_OF_YEAR))
         {
             age = now.get(Calendar.YEAR) -
-                  birth.get(Calendar.YEAR - ADD_ONE_AFTER_BIRTH);
+                  birth.get(Calendar.YEAR - ADD_ONE_IF_AFTER_BIRTH);
         }
         else
         {
