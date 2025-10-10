@@ -13,6 +13,11 @@ package ca.bcit.comp2522.fantasy;
 public class HealingException
         extends RuntimeException
 {
+    /**
+     * HealingException constructor.
+     * @param message The message to display
+     *                when the exception is thrown.
+     */
     public HealingException(final String message)
     {
         super(message);

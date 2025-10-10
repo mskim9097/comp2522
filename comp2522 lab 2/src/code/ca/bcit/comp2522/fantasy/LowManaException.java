@@ -13,6 +13,11 @@ package ca.bcit.comp2522.fantasy;
 public class LowManaException
         extends Exception
 {
+    /**
+     * LowManaException constructor.
+     * @param message The message to display
+     *                when the exception is thrown.
+     */
     public LowManaException(final String message)
     {
         super(message);

@@ -11,7 +11,7 @@ import java.util.Date;
  * - Enter berserk mode to deal damage to a target
  * - Deal double damage when rage exceeds a threshold
  * - Display detailed information including rage
- * Rage increases when berserk is used, capped at 30.
+ * Rage increases when berserk is used, capped at MAXIMUM_RAGE.
  *
  * @author Minsu Kim
  * @author Hali Imanpanah
@@ -45,8 +45,8 @@ public class Orc extends Creature
      */
     public Orc(final String name,
                final Date dateOfBirth,
-               int health,
-               int rage)
+               final int health,
+               final int rage)
     {
         super(name,
               dateOfBirth,
@@ -87,6 +87,11 @@ public class Orc extends Creature
 
         rage += RAGE_INCREMENT;
 
+        if(rage > MAXIMUM_RAGE)
+        {
+            rage = MAXIMUM_RAGE;
+        }
+
         if(rage > DOUBLE_DAMAGE_RAGE)
         {
             target.takeDamage(
@@ -103,15 +108,24 @@ public class Orc extends Creature
      * Validates the rage value.
      *
      * @param rage The rage value to check
-     * @throws IllegalArgumentException if rage is out of range (0–30)
+     * @throws IllegalArgumentException if rage is out of valid range
      */
     private static void validateRage(final int rage)
     {
         if(rage < MINIMUM_RAGE ||
            rage > MAXIMUM_RAGE)
         {
+            final StringBuilder errorMessages;
+            errorMessages = new StringBuilder();
+
+            errorMessages.append("Rage must be between ");
+            errorMessages.append(MINIMUM_RAGE);
+            errorMessages.append(" and ");
+            errorMessages.append(MAXIMUM_RAGE);
+            errorMessages.append(".");
+
             throw new IllegalArgumentException(
-                    "Rage must be between 0 and 30");
+                    errorMessages.toString());
         }
     }
 }

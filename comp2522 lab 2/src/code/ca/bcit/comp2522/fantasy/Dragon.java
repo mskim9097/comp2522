@@ -38,10 +38,12 @@ public class Dragon extends Creature {
      */
     public Dragon(final String name,
                   final Date dateOfBirth,
-                  int health,
-                  int firePower)
+                  final int health,
+                  final int firePower)
     {
-        super(name, dateOfBirth, health);
+        super(name,
+              dateOfBirth,
+              health);
 
         validateFirePower(firePower);
 
@@ -64,14 +66,15 @@ public class Dragon extends Creature {
      * Consumes firepower and reduces the target's health.
      *
      * @param target The Creature to attack with fire
-     * @throws LowFirePowerException if firePower is too low
+     * @throws LowFirePowerException if firePower is lower than the decrement
      */
     public void breatheFire(final Creature target)
             throws LowFirePowerException
     {
         if (firePower < FIRE_POWER_DECREMENT)
         {
-            throw new LowFirePowerException ("Not enough firePower to breathe fire! ");
+            throw new LowFirePowerException (
+                    "Not enough firePower to breathe fire! ");
         }
         firePower -= FIRE_POWER_DECREMENT;
         target.takeDamage(BREATHE_FIRE_DAMAGE);
@@ -79,7 +82,7 @@ public class Dragon extends Creature {
 
     /**
      * Restores the dragon's firepower by a given amount.
-     * Firepower is capped at 100.
+     * Firepower is capped at MAXIMUM_FIRE_POWER.
      *
      * @param amount The amount of firepower to restore
      * @throws IllegalArgumentException if the amount is negative
@@ -102,7 +105,7 @@ public class Dragon extends Creature {
 
     /**
      * Validates the firepower value to ensure it is within
-     * the allowed range (0–100).
+     * the allowed range of MINIMUM_FIRE_POWER and MAXIMUM_FIRE_POWER.
      *
      * @param firePower The firepower value to validate
      * @throws IllegalArgumentException if firePower is out of range
@@ -112,8 +115,17 @@ public class Dragon extends Creature {
         if (firePower < MINIMUM_FIRE_POWER ||
             firePower > MAXIMUM_FIRE_POWER)
         {
+            final StringBuilder errorMessages;
+            errorMessages = new StringBuilder();
+
+            errorMessages.append("Fire power must be between ");
+            errorMessages.append(MINIMUM_FIRE_POWER);
+            errorMessages.append(" and ");
+            errorMessages.append(MAXIMUM_FIRE_POWER);
+            errorMessages.append(".");
+
             throw new IllegalArgumentException(
-                    "Fire power must be between 0 and 100.");
+                    errorMessages.toString());
         }
     }
 }

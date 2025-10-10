@@ -13,6 +13,11 @@ package ca.bcit.comp2522.fantasy;
 public class LowRageException
         extends RuntimeException
 {
+    /**
+     * LowRageException constructor.
+     * @param message The message to display
+     *                when the exception is thrown.
+     */
     public LowRageException(final String message)
     {
         super(message);

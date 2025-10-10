@@ -13,6 +13,11 @@ package ca.bcit.comp2522.fantasy;
 public class LowFirePowerException
         extends Exception
 {
+    /**
+     * LowFirePowerException constructor.
+     * @param message The message to display
+     *                when the exception is thrown.
+     */
     public LowFirePowerException(final String message)
     {
         super(message);
