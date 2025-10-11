@@ -121,7 +121,7 @@ public class IPad extends IDevice
         final IPad ipad;
         ipad = (IPad) o;
 
-        return this.osVersion.equalsIgnoreCase(ipad.osVersion);
+        return this.osVersion.equals(ipad.osVersion);
     }
 
     /**

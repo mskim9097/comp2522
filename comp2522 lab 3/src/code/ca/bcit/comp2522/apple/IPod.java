@@ -88,9 +88,8 @@ public class IPod extends IDevice
     {
         final StringBuilder sb;
         sb = new StringBuilder();
-
+        
         sb.append(super.toString());
-        sb.append("The purpose of this iDevice is ");
         sb.append("Number of songs stored: ");
         sb.append(numberOfSongs);
         sb.append("\n");

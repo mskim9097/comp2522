@@ -106,7 +106,7 @@ abstract class IDevice
         final IDevice device;
         device = (IDevice) o;
 
-        return this.purpose.equalsIgnoreCase(device.purpose);
+        return this.purpose.equals(device.purpose);
     }
 
     /**
