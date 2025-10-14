@@ -11,7 +11,7 @@ import java.util.Date;
  * - Enter berserk mode to deal damage to a target
  * - Deal double damage when rage exceeds a threshold
  * - Display detailed information including rage
- * Rage increases when berserk is used, capped at MAXIMUM_RAGE.
+ * Rage increases when berserk is used, capped at {@value MAXIMUM_RAGE}.
  *
  * @author Minsu Kim
  * @author Hali Imanpanah
@@ -41,7 +41,6 @@ public class Orc extends Creature
      * @param dateOfBirth The birthdate of the Orc
      * @param health The health value of the Orc
      * @param rage The initial rage value of the Orc
-     * @throws IllegalArgumentException if rage is invalid
      */
     public Orc(final String name,
                final Date dateOfBirth,
@@ -71,10 +70,10 @@ public class Orc extends Creature
     /**
      * Allows the Orc to go berserk and attack a target Creature.
      * Rage increases after using berserk, and if the rage is above
-     * a threshold, the Orc deals double damage.
+     * a threshold, the Orc deals {@value DOUBLE_DAMAGE} times.
      *
      * @param target The Creature being attacked
-     * @throws LowRageException if rage is too low to attack
+     * @throws LowRageException if rage is less than {@value MINIMUM_BERSERK_RAGE}
      */
     public void berserk(final Creature target)
             throws LowRageException
@@ -82,7 +81,7 @@ public class Orc extends Creature
         if(rage < MINIMUM_BERSERK_RAGE)
         {
             throw new LowRageException(
-                    "Not enough rage to berserk!");
+                    "Rage cannot be less than " + MINIMUM_BERSERK_RAGE + ".");
         }
 
         rage += RAGE_INCREMENT;

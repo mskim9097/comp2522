@@ -25,15 +25,17 @@ import java.util.Objects;
  */
 public class IPhone extends IDevice
 {
+    private static final double MINIMUM_MINUTES_REMAINING = 0.0;
+    private static final int    COMPARISON_EQUAL = 0;
+
     private final double minutesRemaining;
     private final String carrier;
 
     /**
      * Creates a new IPhone object.
      *
-     * @param minutesRemaining minutes left on the plan (must be non-negative)
-     * @param carrier the name of the carrier (cannot be blank)
-     * @throws IllegalArgumentException if values are invalid
+     * @param minutesRemaining minutes left on the plan
+     * @param carrier the name of the carrier
      */
     public IPhone(final double minutesRemaining,
                   final String carrier)
@@ -128,7 +130,7 @@ public class IPhone extends IDevice
         iphone = (IPhone) o;
 
         return Double.compare(this.minutesRemaining,
-                iphone.minutesRemaining) == 0;
+                iphone.minutesRemaining) == COMPARISON_EQUAL;
     }
 
     /**
@@ -145,19 +147,20 @@ public class IPhone extends IDevice
     /**
      * Checks that the number of minutes is valid.
      * <p>
-     * The minutes must be zero or more.
      * If a negative value is passed in, this method
      * throws an exception to stop the object from being created.
      * </p>
      *
      * @param minutesRemaining the number of minutes to check
-     * @throws IllegalArgumentException if minutesRemaining is negative
+     * @throws IllegalArgumentException if minutesRemaining is less than {@value #MINIMUM_MINUTES_REMAINING}
      */
     private static void validateMinutesRemaining(final double minutesRemaining)
     {
-        if(minutesRemaining < 0.0)
+        if(minutesRemaining < MINIMUM_MINUTES_REMAINING)
         {
-            throw new IllegalArgumentException("Invalid minutes remaining");
+            throw new IllegalArgumentException(
+                    "MINUTES_REMAINING cannot be less than " +
+                    MINIMUM_MINUTES_REMAINING);
         }
     }
 

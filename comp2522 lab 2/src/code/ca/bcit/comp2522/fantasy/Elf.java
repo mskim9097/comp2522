@@ -9,7 +9,7 @@ import java.util.Date;
  * a mana value used to cast spells.
  * Elves can:
  * - Cast spells that consume mana and damage targets
- * - Restore mana (capped at MAXIMUM_MANA)
+ * - Restore mana
  * - Display detailed information including mana
  *
  * @author Minsu Kim
@@ -20,8 +20,8 @@ import java.util.Date;
  */
 public class Elf extends Creature
 {
-    private static final int MINIMUM_MANA      = 0;
-    private static final int MAXIMUM_MANA      = 50;
+    private static final int MINIMUM_MANA        = 0;
+    private static final int MAXIMUM_MANA        = 50;
 
     private static final int MANA_COST_PER_SPELL = 5;
     private static final int SPELL_DAMAGE        = 10;
@@ -36,7 +36,6 @@ public class Elf extends Creature
      * @param dateOfBirth The birthdate of the Elf
      * @param health The health value of the Elf
      * @param mana The initial mana value of the Elf
-     * @throws IllegalArgumentException if a mana is invalid
      */
     public Elf(final String name,
                final Date dateOfBirth,
@@ -68,7 +67,7 @@ public class Elf extends Creature
      * Consumes mana and inflicts damage on the target.
      *
      * @param target The Creature being attacked
-     * @throws LowManaException if mana is too low to cast a spell
+     * @throws LowManaException if mana is less than {@value MANA_COST_PER_SPELL}
      */
     public void castSpell(final Creature target)
             throws LowManaException
@@ -76,7 +75,7 @@ public class Elf extends Creature
         if(mana < MANA_COST_PER_SPELL)
         {
             throw new LowManaException(
-                    "Not enough mana to cast spell");
+                    "The mana cannot be less than " + MANA_COST_PER_SPELL + ".");
         }
 
         mana -= MANA_COST_PER_SPELL;
@@ -87,17 +86,16 @@ public class Elf extends Creature
 
     /**
      * Restores the Elf's mana by a given amount.
-     * Mana cannot go below MINIMUM_MANA or above MAXIMUM_MANA.
      *
      * @param amount The amount of mana to restore
-     * @throws IllegalArgumentException if the amount is negative
+     * @throws IllegalArgumentException if amount is less than {@value MINIMUM_MANA}
      */
     public void restoreMana(final int amount)
     {
         if(amount < MINIMUM_MANA)
         {
             throw new IllegalArgumentException(
-                    "Restore amount cannot be negative.");
+                    "Restore amount cannot be less than " + MINIMUM_MANA + ".");
         }
 
         mana += amount;
@@ -113,7 +111,7 @@ public class Elf extends Creature
      *
      * @param mana The mana value to check
      * @throws IllegalArgumentException if mana is out of range
-     * of MINIMUM_MANA and MAXIMUM_MANA
+     * of {@value MINIMUM_MANA} and {@value MAXIMUM_MANA}
      */
     private static void validateMana(final int mana)
     {

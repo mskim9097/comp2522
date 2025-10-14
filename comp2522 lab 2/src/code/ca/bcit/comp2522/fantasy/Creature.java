@@ -19,10 +19,10 @@ public class Creature
     private static final int MAXIMUM_HEALTH = 1000;
 
     private static final int DEAD_HEALTH = 0;
-    private static final int NO_DAMAGE   = 0;
-    private static final int NO_HEALING  = 0;
+    private static final int MINIMUM_DAMAGE   = 0;
+    private static final int MINIMUM_HEALING  = 0;
 
-    private static final int AGE_INCREMENT = 1;
+    private static final int BIRTHDAY_NOT_PASSED_OFFSET = 1;
 
     private final String name;
     private final Date   dateOfBirth;
@@ -30,11 +30,10 @@ public class Creature
 
     /**
      * Constructor for the Creature class.
-     * Validates inputs and sets initial values.
      *
-     * @param name The name of the creature (non-null, not empty)
-     * @param dateOfBirth The birthdate of the creature (non-null, not in the future)
-     * @param health The health of the creature between valid minimum health and maximum health
+     * @param name The name of the creature
+     * @param dateOfBirth The birthdate of the creature
+     * @param health The health of the creature.
      */
     public Creature(final String name,
                     final Date dateOfBirth,
@@ -51,7 +50,7 @@ public class Creature
 
     /**
      * Method that checks if the creature is alive.
-     * @return true if the creature is greater than DEAD_HEALTH, false otherwise
+     * @return true if the creature is alive, false otherwise
      */
     public boolean isAlive()
     {
@@ -60,17 +59,16 @@ public class Creature
 
     /**
      * Reduces the creature's health by the given damage amount.
-     * Health cannot drop below DEAD_HEALTH.
      *
      * @param damage The amount of damage to take
-     * @throws DamageException if damage is negative
+     * @throws DamageException if damage is less than {@value MINIMUM_DAMAGE}
      */
     public void takeDamage(final int damage)
     {
-        if (damage < NO_DAMAGE)
+        if (damage < MINIMUM_DAMAGE)
         {
             throw new DamageException(
-                    "Damage cannot be negative.");
+                    "Damage cannot be less than " + MINIMUM_DAMAGE + ".");
         }
 
         health -= damage;
@@ -83,17 +81,16 @@ public class Creature
 
     /**
      * Increases the creature's health by the given healing amount.
-     * Health cannot exceed Maximum Health.
      *
      * @param healAmount The amount of health to heal
-     * @throws HealingException if the healing amount is negative
+     * @throws HealingException if the healing amount is less than {@value MINIMUM_HEALING}
      */
     public void heal(final int healAmount)
     {
-        if(healAmount < NO_HEALING)
+        if(healAmount < MINIMUM_HEALING)
         {
             throw new HealingException(
-                    "Healing amount cannot be negative.");
+                    "Healing amount cannot be less than " + MINIMUM_HEALING + ".");
         }
 
         health += healAmount;
@@ -121,7 +118,7 @@ public class Creature
            (now.getMonth() == dateOfBirth.getMonth() &&
             now.getDate() < dateOfBirth.getDate()))
         {
-            age -= AGE_INCREMENT;
+            age -= BIRTHDAY_NOT_PASSED_OFFSET;
         }
         return age;
     }

@@ -12,7 +12,7 @@ import java.util.Objects;
  * </p>
  *
  * <p>
- * Subclasses (such as IPod, IPad, IPhone, and IPhone16) must implement
+ *  must implement
  * {@link #printDetails()} to display their own specific fields.
  * </p>
  *
@@ -30,7 +30,6 @@ abstract class IDevice
      * Constructs a new {@code IDevice} with the given purpose.
      *
      * @param purpose a non-empty description of what the device is for
-     * @throws IllegalArgumentException if {@code purpose} is null or blank
      */
     public IDevice(final String purpose)
     {
@@ -72,6 +71,7 @@ abstract class IDevice
         sb.append("The purpose of this iDevice is ");
         sb.append(getPurpose());
         sb.append("\n");
+
         return sb.toString();
     }
 

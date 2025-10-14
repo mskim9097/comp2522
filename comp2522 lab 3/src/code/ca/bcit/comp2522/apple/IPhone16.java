@@ -22,22 +22,23 @@ import java.util.Objects;
  */
 public final class IPhone16 extends IPhone
 {
+    private static final int MINIMUM_MEMORY_GB = 0;
+
     private final boolean highResolutionCamera;
     private final int memoryGB;
 
     /**
      * Builds a new IPhone16 with minutes, carrier, camera, and memory.
      *
-     * @param minutesRemaining minutes left on the plan (must be ≥ 0)
-     * @param carrier carrier name (cannot be blank)
-     * @param highResolutionCamera true if it has a high-res camera
-     * @param memoryGB memory size in gigabytes (must be ≥ 0)
-     * @throws IllegalArgumentException if any values are invalid
+     * @param minutesRemaining minutes left on the plan
+     * @param carrier carrier name
+     * @param highResolutionCamera true if high-res camera, false otherwise
+     * @param memoryGB memory size in gigabytes
      */
     public IPhone16(final double minutesRemaining,
                     final String carrier,
                     final boolean highResolutionCamera,
-                    final int memoryGB)
+                    final int     memoryGB)
     {
         super(minutesRemaining, carrier);
 
@@ -52,7 +53,8 @@ public final class IPhone16 extends IPhone
      *
      * @return true if high-res camera, false otherwise
      */
-    public final boolean isHighResolutionCamera() {
+    public final boolean isHighResolutionCamera()
+    {
         return highResolutionCamera;
     }
 
@@ -61,7 +63,8 @@ public final class IPhone16 extends IPhone
      *
      * @return memory in GB
      */
-    public final int getMemoryGb() {
+    public final int getMemoryGb()
+    {
         return memoryGB;
     }
 
@@ -146,13 +149,14 @@ public final class IPhone16 extends IPhone
      * Makes sure memory is not negative.
      *
      * @param memoryGB memory size in GB
-     * @throws IllegalArgumentException if memory is less than 0
+     * @throws IllegalArgumentException if memory is less than {@value MINIMUM_MEMORY_GB}
      */
     private static void validateMemoryGB(final int memoryGB)
     {
-        if(memoryGB < 0)
+        if(memoryGB < MINIMUM_MEMORY_GB)
         {
-            throw new IllegalArgumentException("Invalid memory in GB");
+            throw new IllegalArgumentException(
+                    "Memory cannot be less than " + MINIMUM_MEMORY_GB);
         }
     }
 }

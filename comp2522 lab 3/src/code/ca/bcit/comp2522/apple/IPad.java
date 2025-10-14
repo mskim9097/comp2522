@@ -28,8 +28,7 @@ public class IPad extends IDevice
      * Builds a new IPad with its case info and OS version.
      *
      * @param hasCase true if the iPad has a case
-     * @param osVersion the OS version (cannot be blank)
-     * @throws IllegalArgumentException if OS version is blank
+     * @param osVersion the OS version
      */
     public IPad(final boolean hasCase,
                 final String osVersion)

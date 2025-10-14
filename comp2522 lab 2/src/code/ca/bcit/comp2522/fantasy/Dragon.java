@@ -28,13 +28,11 @@ public class Dragon extends Creature {
 
     /**
      * Constructor for the Dragon class.
-     * Validates firePower and initializes the Dragon object.
      *
      * @param name The name of the dragon
      * @param dateOfBirth The birthdate of the dragon
      * @param health The health of the dragon
      * @param firePower The initial firepower of the dragon
-     * @throws IllegalArgumentException if firePower is invalid
      */
     public Dragon(final String name,
                   final Date dateOfBirth,
@@ -66,7 +64,7 @@ public class Dragon extends Creature {
      * Consumes firepower and reduces the target's health.
      *
      * @param target The Creature to attack with fire
-     * @throws LowFirePowerException if firePower is lower than the decrement
+     * @throws LowFirePowerException if firePower is lower than {@value FIRE_POWER_DECREMENT}
      */
     public void breatheFire(final Creature target)
             throws LowFirePowerException
@@ -82,17 +80,16 @@ public class Dragon extends Creature {
 
     /**
      * Restores the dragon's firepower by a given amount.
-     * Firepower is capped at MAXIMUM_FIRE_POWER.
      *
      * @param amount The amount of firepower to restore
-     * @throws IllegalArgumentException if the amount is negative
+     * @throws IllegalArgumentException if the amount is less than {@value MINIMUM_FIRE_POWER}
      */
     public void restoreFirePower(final int amount)
     {
         if (amount < MINIMUM_FIRE_POWER)
         {
             throw new IllegalArgumentException(
-                    "Amount cannot be negative.");
+                    "Amount cannot be less than " + MINIMUM_FIRE_POWER + ".");
         }
 
         firePower += amount;
@@ -105,10 +102,11 @@ public class Dragon extends Creature {
 
     /**
      * Validates the firepower value to ensure it is within
-     * the allowed range of MINIMUM_FIRE_POWER and MAXIMUM_FIRE_POWER.
+     * the allowed range of {@value MINIMUM_FIRE_POWER} and {@value MAXIMUM_FIRE_POWER}.
      *
      * @param firePower The firepower value to validate
-     * @throws IllegalArgumentException if firePower is out of range
+     * @throws IllegalArgumentException if firePower is out of
+     * {@value MINIMUM_FIRE_POWER} and {@value MAXIMUM_FIRE_POWER}
      */
     private static void validateFirePower(final int firePower)
     {

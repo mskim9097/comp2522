@@ -26,17 +26,19 @@ import java.util.Objects;
  */
 public class IPod extends IDevice
 {
-    private final int numberOfSongs;
+    private static final int    MINIMUM_SONGS     = 0;
+    private static final double MINIMUM_VOLUME_DB = 0.0;
+
+    private final int    numberOfSongs;
     private final double maximumVolumeDB;
 
     /**
      * Builds a new IPod with songs and volume settings.
      *
-     * @param numberOfSongs how many songs are stored (must be ≥ 0)
-     * @param maximumVolumeDB the loudest volume in decibels (must be ≥ 0)
-     * @throws IllegalArgumentException if songs or volume are invalid
+     * @param numberOfSongs how many songs are stored
+     * @param maximumVolumeDB the loudest volume in decibels
      */
-    public IPod(final int numberOfSongs,
+    public IPod(final int    numberOfSongs,
                 final double maximumVolumeDB)
     {
         super("music");
@@ -144,13 +146,14 @@ public class IPod extends IDevice
      * Makes sure the number of songs is not negative.
      *
      * @param numberOfSongs number to check
-     * @throws IllegalArgumentException if negative
+     * @throws IllegalArgumentException if the number is less than {@value MINIMUM_SONGS}
      */
     private static void validateNumberOfSongs(final int numberOfSongs)
     {
-        if(numberOfSongs < 0)
+        if(numberOfSongs < MINIMUM_SONGS)
         {
-            throw new IllegalArgumentException("Invalid number of songs");
+            throw new IllegalArgumentException(
+                    "The number of songs cannot be less than " + MINIMUM_SONGS + ".");
         }
     }
 
@@ -158,13 +161,14 @@ public class IPod extends IDevice
      * Makes sure the maximum volume is not negative.
      *
      * @param maximumVolumeDB volume in dB
-     * @throws IllegalArgumentException if negative
+     * @throws IllegalArgumentException if the volume is less than {@value MINIMUM_VOLUME_DB}
      */
     private static void validateMaximumVolumeDB(final double maximumVolumeDB)
     {
-        if(maximumVolumeDB < 0)
+        if(maximumVolumeDB < MINIMUM_VOLUME_DB)
         {
-            throw new IllegalArgumentException("Invalid maximum volume in decibels");
+            throw new IllegalArgumentException(
+                    "Maximum volume cannot be less than " + MINIMUM_VOLUME_DB + ".");
         }
     }
 }
