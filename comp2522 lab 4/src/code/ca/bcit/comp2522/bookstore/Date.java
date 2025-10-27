@@ -18,6 +18,7 @@ package ca.bcit.comp2522.bookstore;
  * @author Minsu Kim
  * @author Hali Imanpanah
  * @author Esin Sahutoglu
+ *
  * @version 1.0
  */
 public class Date implements Printable
@@ -475,4 +476,3 @@ public class Date implements Printable
     }
 
 }
-

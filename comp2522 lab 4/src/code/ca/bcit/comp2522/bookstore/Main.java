@@ -3,8 +3,15 @@ package ca.bcit.comp2522.bookstore;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main class that creates and tests.
+ */
 public class Main
 {
+    /**
+     * Drives the program.
+     * @param args no-argument
+     */
     public static void main(final String[] args)
     {
         final Name n1;

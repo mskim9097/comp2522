@@ -1,27 +1,35 @@
 @FunctionalInterface
-interface Mathable {
-    int calculate(int a, int b);
+interface Mathable
+{
+    double operate(int x, int y);
 }
 
-public class Calculator
+class Calculator
 {
 
-    final static void main(final String[] args)
+    private static double calculate(final int a,
+                                    final int b,
+                                    final Mathable m)
     {
-        final Mathable add;
+        System.out.println("doing math on " + a + " and " + b);
+        return m.operate(a, b);
+    }
+
+    public static void main(final String[] args)
+    {
         final Mathable subtraction;
+        final Mathable addition;
         final Mathable power;
         final Mathable multiplication;
 
-        add = (a, b) -> a + b;
-        subtraction = (a, b) -> a - b;
-        power = (a, b) -> (int) Math.pow(a, b);
-        multiplication = (a, b) -> a * b;
+        subtraction = (x,y) -> x - y;
 
-        System.out.println(add.calculate(1, 2));
-        System.out.println(subtraction.calculate(1, 2));
-        System.out.println(power.calculate(2, 3));
-        System.out.println(multiplication.calculate(2, 3));
+        System.out.println(calculate(5,6, subtraction));
+        System.out.println(calculate(5,6, (x,y) -> x + y));
+        System.out.println(calculate(2,3, (x,y) -> Math.pow(x, y)));
+        System.out.println(calculate(6,3, (x,y) -> x*y));
+
+
 
 
     }

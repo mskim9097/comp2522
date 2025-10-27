@@ -1,5 +1,14 @@
 package ca.bcit.comp2522.bookstore;
 
+/**
+ * A class representing Book.
+ *
+ * @author Minsu Kim
+ * @author Hali Imanpanah
+ * @author Esin Sahutoglu
+ *
+ * @version 1.0
+ */
 public class Book implements Comparable<Book>,
                              Printable,
                              Reversible
@@ -12,6 +21,13 @@ public class Book implements Comparable<Book>,
     private final int yearPublished;
     private final Author author;
 
+    /**
+     * Constructor of Book.
+     *
+     * @param title book's title.
+     * @param yearPublished published year of book.
+     * @param author author of a book.
+     */
     public Book (final String title,
                  final int    yearPublished,
                  final Author author)
@@ -25,27 +41,45 @@ public class Book implements Comparable<Book>,
         this.author = author;
     }
 
+    /**
+     * A method that gets a title.
+     * @return title
+     */
     public final String getTitle()
     {
         return title;
     }
 
+    /**
+     * A method that gets a published year.
+     * @return published year.
+     */
     public final int getYearPublished()
     {
         return yearPublished;
     }
 
+    /**
+     * A method that gets a author of a book.
+     * @return author of a book.
+     */
     public final Author getAuthor()
     {
         return author;
     }
 
+    /**
+     * A method that displays a book's detail.
+     */
     @Override
     public void display()
     {
         System.out.println(toString());
     }
 
+    /**
+     * A method that displays reversed book's title.
+     */
     @Override
     public void backward()
     {
@@ -58,6 +92,13 @@ public class Book implements Comparable<Book>,
         System.out.println("Reversed Title: " + reversed.toString() + "\n");
     }
 
+    /**
+     * A method that compares this book with another book by published year.
+     * @param that the book to compare with
+     * @return A negative integer if this book was published after the other,
+     *         zero if in the same year,
+     *         or a positive integer if published before.
+     */
     @Override
     public int compareTo(final Book that)
     {
@@ -70,6 +111,7 @@ public class Book implements Comparable<Book>,
         return that.getYearPublished() - this.getYearPublished();
     }
 
+    // A method that validates a title.
     private static void validateTitle(final String title)
     {
         if(title == null ||
@@ -81,6 +123,7 @@ public class Book implements Comparable<Book>,
         }
     }
 
+    // A method that validates a published year.
     private static void validateYearPublished(final int yearPublished)
     {
         if(yearPublished < MINIMUM_YEAR_PUBLISHED ||
@@ -91,6 +134,7 @@ public class Book implements Comparable<Book>,
         }
     }
 
+    // A method that validates an author of a book.
     private static void validateAuthor(final Author author)
     {
         if(author == null)
@@ -100,6 +144,7 @@ public class Book implements Comparable<Book>,
         }
     }
 
+    // A method that returns book's details.
     @Override
     public String toString()
     {
@@ -115,6 +160,7 @@ public class Book implements Comparable<Book>,
         sb.append("Author ");
         sb.append(author.toString());
         sb.append("\n");
+
         return sb.toString();
     }
 }
