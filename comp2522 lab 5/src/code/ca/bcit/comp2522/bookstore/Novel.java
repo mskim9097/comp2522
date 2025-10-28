@@ -1,17 +1,18 @@
-package ca.bcit.comp2522.bookStore;
+package ca.bcit.comp2522.bookstore;
 
 /**
- * This class represents a novel.
+ * A Novel has a title, author, and year published
  *
  * @author Minsu Kim
- * @author Esin
- * @author Hali
+ * @author Esin Sahutoglu
+ * @author Hali Imanpanah
  *
  * @version 1.0
  */
-public class Novel implements Comparable<Novel>
+public class Novel
+        implements Comparable<Novel>
 {
-    private static final int MIN_YEAR_PUBLISHED = 0;
+    private static final int MIN_YEAR_PUBLISHED = 1455;
     private static final int MAX_YEAR_PUBLISHED = 2025;
 
     private final String title;
@@ -20,6 +21,7 @@ public class Novel implements Comparable<Novel>
 
     /**
      * Constructor for a novel.
+     *
      * @param title The title of the novel.
      * @param authorName The author name of the novel.
      * @param yearPublished The year the novel was published.
@@ -39,6 +41,7 @@ public class Novel implements Comparable<Novel>
 
     /**
      * Gets the title of the novel.
+     *
      * @return The title of the novel.
      */
     public final String getTitle()
@@ -48,6 +51,7 @@ public class Novel implements Comparable<Novel>
 
     /**
      * Gets the author of the novel.
+     *
      * @return The author of the novel.
      */
     public final String getAuthorName()
@@ -57,6 +61,7 @@ public class Novel implements Comparable<Novel>
 
     /**
      * Gets the year the novel was published.
+     *
      * @return The year the novel was published.
      */
     public final int getYearPublished()
@@ -66,10 +71,12 @@ public class Novel implements Comparable<Novel>
 
     /**
      * Compares two novels by title.
+     *
      * @param that The other novel to compare to.
+     *
      * @return 0 if the titles are equal,
-     * a negative number if this title is less than that title,
-     * or a positive number if this title is greater than that title.
+     *         a negative number if this title is less than that title,
+     *         or a positive number if this title is greater than that title.
      */
     @Override
     public int compareTo(final Novel that)
@@ -82,27 +89,42 @@ public class Novel implements Comparable<Novel>
         return this.title.compareToIgnoreCase(that.title);
     }
 
-    // A method that validates the title.
+    /**
+     * Validates the title to ensure it is not null or blank.
+     *
+     * Throws an IllegalArgumentException if the title is invalid.
+     */
     private static void validateTitle(final String title)
     {
-        if (title == null || title.isBlank())
+        if (title == null ||
+            title.isBlank())
         {
             throw new IllegalArgumentException(
                     "Title cannot be null or blank");
         }
     }
 
-    // A method that validates the author.
+    /**
+     * Validates the author to ensure it is not null or blank.
+     *
+     * Throws an IllegalArgumentException if the author is invalid.
+     */
     private static void validateAuthor(final String author)
     {
-        if (author == null || author.isBlank())
+        if (author == null ||
+            author.isBlank())
         {
             throw new IllegalArgumentException(
                     "Author cannot be null or blank");
         }
     }
 
-    // A method that validates the year published.
+    /**
+     * Validates that the year published is within the acceptable range.
+     *
+     * Throws an IllegalArgumentException if the year is less than {@value MIN_YEAR_PUBLISHED} or
+     * greater than MAX_YEAR_PUBLISHED.
+     */
     private static void validateYearPublished(final int yearPublished)
     {
         if (yearPublished < MIN_YEAR_PUBLISHED ||
@@ -116,7 +138,8 @@ public class Novel implements Comparable<Novel>
     }
 
     /**
-     * Returns a string representation of the novel.
+     * A method which returns a string representation of the novel.
+     *
      * @return A string representation of the novel.
      */
     @Override

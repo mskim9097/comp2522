@@ -4,6 +4,8 @@ import java.util.Objects;
 
 /**
  * A subclass of {@link Book} that represents a biography.
+ * A Biography is a book written about a person's life, authored by someone else.
+ * This class implements {@link Printable} to allow formatted display.
  *
  * @author Minsu Kim
  * @author Hali Imanpanah
@@ -17,7 +19,8 @@ public class Biography extends Book
     private final Person subject;
 
     /**
-     * Constructor of Biography.
+     * Constructs a Biography with the given title,
+     * publication year, author, and subject.
      *
      * @param title title of a biography.
      * @param yearPublished published year of a biography.
@@ -37,6 +40,7 @@ public class Biography extends Book
 
     /**
      * A method that gets subject.
+     *
      * @return subject
      */
     public final Person getSubject()
@@ -55,6 +59,8 @@ public class Biography extends Book
 
     /**
      * A method that checks if an object equals to another object.
+     * Two biographies are considered equal if their subjects are equal
+     *
      * @param o   the reference object with which to compare.
      * @return true if this object equals to that object.
      */
@@ -84,6 +90,7 @@ public class Biography extends Book
 
     /**
      * A method that gets hashCode of a subject.
+     *
      * @return subject's hashcode
      */
     @Override
@@ -104,6 +111,7 @@ public class Biography extends Book
 
     /**
      * A method that returns biography's details.
+     *
      * @return formatted biography's details.
      */
     @Override

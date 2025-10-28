@@ -1,7 +1,11 @@
 package ca.bcit.comp2522.bookstore;
 
 /**
- * A class representing a person.
+ * Represents a person with a name, date of birth,
+ * and optional date of death.
+ * This class implements {@link Comparable}, {@link Printable}, and {@link Reversible}
+ * interfaces, allowing instances to be compared by birth date, printed, and
+ * have their names displayed in reverse order.
  *
  * @author Minsu Kim
  * @author Hali Imanpanah
@@ -19,7 +23,8 @@ public class Person
     private final Name name;
 
     /**
-     * Constructs a new person.
+     * Constructs a new {@code Person} with the specified name, date of birth,
+     * and date of death.
      *
      * @param name The person's name.
      * @param dateOfBirth The person's date of birth.
@@ -40,6 +45,7 @@ public class Person
 
     /**
      * Gets the person's date of birth.
+     *
      * @return The person's date of birth.
      */
     public final Date getDateOfBirth()
@@ -58,6 +64,7 @@ public class Person
 
     /**
      * Gets the person's name.
+     *
      * @return The person's name.
      */
     public final Name getName()
@@ -92,6 +99,7 @@ public class Person
 
     /**
      * Compares this person to another person.
+     *
      * @param that The other person.
      * @return The comparison result.
      */
@@ -185,6 +193,7 @@ public class Person
 
     /**
      * A method that returns person's details.
+     *
      * @return A string representation of the person.
      */
     @Override

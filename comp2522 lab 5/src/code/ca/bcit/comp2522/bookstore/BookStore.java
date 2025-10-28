@@ -1,15 +1,16 @@
-package ca.bcit.comp2522.bookStore;
+package ca.bcit.comp2522.bookstore;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * This class represents a bookstore.
+ * BookStore can hold many {@link Novel} objects.
+ * Has instance data for store name and list of bookList it has.
  *
  * @author Minsu Kim
- * @author Hali
- * @author Esin
+ * @author Esin Sahutoglu
+ * @author Hali Imanpanah
  *
  * @version 1.0
  */
@@ -30,6 +31,8 @@ public class BookStore
 
     /**
      * Constructor for BookStore.
+     * Constructs with a defined list of bookList
+     *
      * @param storeName The name of the bookstore.
      */
     public BookStore (final String storeName)
@@ -143,7 +146,8 @@ public class BookStore
 
     /**
      * Returns the name of the store.
-     * @return The name of the store.
+     *
+     * @return the {@code storeName} of this object
      */
     public final String getStoreName()
     {
@@ -151,8 +155,9 @@ public class BookStore
     }
 
     /**
-     * Returns the list of books in the store.
-     * @return The list of books in the store.
+     * Returns the list of novels available in the store
+     *
+     * @return a {@code List<Novel>} containing all the novels
      */
     public List<Novel> getBookList()
     {
@@ -179,6 +184,7 @@ public class BookStore
 
     /**
      * Prints all titles that contain the specified parameter.
+     *
      * @param title The title to search for.
      */
     public void printBookTitle(final String title)
@@ -231,9 +237,12 @@ public class BookStore
     }
 
     /**
-     * Prints all books from the specified decade (normalized).
-     * For example, 1955 -> printed books from 1950 to 1959.
-     * @param decade The decade to search for.
+     * Prints all novels published in the specified decade.
+     *
+     * If the list is empty or the decade is below {@value MINIMUM_DECADE},
+     * an appropriate message is displayed.
+     *
+     * @param decade the starting year of the decade to filter by
      */
     public void printGroupByDecade(final int decade)
     {
@@ -272,7 +281,11 @@ public class BookStore
     }
 
     /**
-     * Prints the longest book title.
+     * Finds and prints the title of the novel with the longest name in the book list.
+     * If the list is empty, a message indicating no books are available is displayed.
+     *
+     * The method iterates through the {@code bookList} to compare the length of each
+     * novel’s title and identifies the one with the greatest length.
      */
     public void getLongest()
     {
@@ -296,9 +309,13 @@ public class BookStore
     }
 
     /**
-     * Returns true if there is a book written in the specified year.
-     * @param year The year to search for.
-     * @return true if there is a book written in the specified year.
+     * Checks whether there is at least one novel in the list
+     * that was published in the specified year.
+     *
+     * @param year the year to check for in the {@code bookList}
+     *
+     * @return {@code true} if a novel was published in the given year;
+     *         {@code false} otherwise or if the list is empty
      */
     public boolean isThereABookWrittenIn(final int year)
     {
@@ -315,9 +332,15 @@ public class BookStore
     }
 
     /**
-     * Returns the number of books that contain the specified word.
-     * @param word The word to search for. Case-insensitive.
-     * @return The number of books that contain the specified word.
+     * Counts how many novels in the list have titles containing
+     * the specified word (case-insensitive).
+     *
+     * If the {@code bookList} is empty, or if the provided word is
+     * {@code null} or blank, the method returns {@value DEFAULT_COUNT}.
+     *
+     * @param word The word to search for within each novel’s title
+     *
+     * @return the number of novels whose titles contain the specified word
      */
     public int howManyBooksContain(final String word)
     {
@@ -345,10 +368,15 @@ public class BookStore
     }
 
     /**
-     * Returns the percentage of books written between the specified years.
-     * @param first The first year to search for.
-     * @param last The last year to search for.
-     * @return The percentage of books written between the specified years.
+     * Calculates the percentage of novels published between
+     * the two given years (inclusive).
+     *
+     * Returns {@value DEFAULT_PERCENTAGE} if the list is empty
+     * or either year is below {@value MINIMUM_YEAR}.
+     *
+     * @param first the first year
+     * @param last  the second year
+     * @return the percentage of novels within the range
      */
     public int whichPercentWrittenBetween(int first,
                                           int last)
@@ -388,9 +416,9 @@ public class BookStore
     }
 
     /**
-     * A method that returns the oldest book.
-     * @return The oldest book in the store,
-     * or null if there are no books.
+     * Returns the oldest novel in the {@code bookList}.
+     *
+     * @return the oldest {@code Novel}, or {@code null} if the list is empty
      */
     public Novel getOldestBook()
     {
@@ -412,8 +440,10 @@ public class BookStore
 
     /**
      * A method that returns a list of all books whose title is this length.
+     *
      * @param titleLength The length of the title to search for.
-     * @return A list of all books whose title is this length.
+     *
+     * @return a {@code List<Novel>} with matching titles, or an empty list if none
      */
     private List<Novel> getBooksThisLength(final int titleLength)
     {
@@ -442,7 +472,13 @@ public class BookStore
         return result;
     }
 
-    // A method that validates the specified store name.
+    /**
+     * A method that validates that the store name is not null or blank.
+     *
+     * @param storeName the name of the store to validate
+     *
+     * @throws IllegalArgumentException if the store name is invalid
+     */
     private static void validateStoreName(final String storeName)
     {
         if (storeName == null || storeName.isBlank())
@@ -453,8 +489,11 @@ public class BookStore
     }
 
     /**
-     * Main method.
-     * Calls all the BookStore methods listed above, in this table.
+     * Main method which demonstrates the features of the {@code BookStore} class.
+     *
+     * Creates a bookstore instance and showcases methods such as
+     * printing titles, filtering books, and displaying statistics.
+     *
      * @param args Command line arguments.
      */
     public static void main(final String[] args)

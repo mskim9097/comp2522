@@ -2,6 +2,8 @@ package ca.bcit.comp2522.bookstore;
 
 /**
  * A subclass of {@link Person} that represents an Author.
+ * An Author has a name, birth and death dates, and a genre specialization.
+ * This class also implements the {@link Printable} interface to allow displaying author details.
  *
  * @author Minsu Kim
  * @author Hali Imanpanah
@@ -17,7 +19,8 @@ public class Author extends Person
     private final String genre;
 
     /**
-     * Constructor of Author.
+     * Constructs an Author object with the specified name,
+     * birth date, death date, and genre.
      *
      * @param name name of author.
      * @param dateOfBirth birthdate of author.
@@ -36,8 +39,9 @@ public class Author extends Person
     }
 
     /**
-     * A method that gets genre.
-     * @return
+     * Returns the genre the author specializes in
+     *
+     * @return the genre of the author
      */
     public final String getGenre()
     {
@@ -45,7 +49,8 @@ public class Author extends Person
     }
 
     /**
-     * Displays the person's information.
+     * Displays the author's information to the console.
+     * This includes name, birth/death dates, and genre.
      */
     @Override
     public void display()

@@ -2,6 +2,8 @@ package ca.bcit.comp2522.bookstore;
 
 /**
  * A class representing Book.
+ * A Book has a title, publication year, and an author.
+ * It supports comparison by publication year, formatted display, and title reversal.
  *
  * @author Minsu Kim
  * @author Hali Imanpanah
@@ -14,7 +16,7 @@ public class Book implements Comparable<Book>,
                              Reversible
 {
     private static final int MAXIMUM_TITLE_CHARACTERS = 100;
-    private static final int MINIMUM_YEAR_PUBLISHED   = 1;
+    private static final int MINIMUM_YEAR_PUBLISHED   = 1455;
     private static final int CURRENT_YEAR             = 2025;
 
     private final String title;
@@ -22,7 +24,8 @@ public class Book implements Comparable<Book>,
     private final Author author;
 
     /**
-     * Constructor of Book.
+     * Constructs a Book with the specified title,
+     * publication year, and author.
      *
      * @param title book's title.
      * @param yearPublished published year of book.
@@ -43,6 +46,7 @@ public class Book implements Comparable<Book>,
 
     /**
      * A method that gets a title.
+     *
      * @return title
      */
     public final String getTitle()
@@ -52,6 +56,7 @@ public class Book implements Comparable<Book>,
 
     /**
      * A method that gets a published year.
+     *
      * @return published year.
      */
     public final int getYearPublished()
@@ -61,6 +66,7 @@ public class Book implements Comparable<Book>,
 
     /**
      * A method that gets a author of a book.
+     *
      * @return author of a book.
      */
     public final Author getAuthor()
@@ -94,6 +100,7 @@ public class Book implements Comparable<Book>,
 
     /**
      * A method that compares this book with another book by published year.
+     *
      * @param that the book to compare with
      * @return A negative integer if this book was published after the other,
      *         zero if in the same year,
@@ -144,7 +151,11 @@ public class Book implements Comparable<Book>,
         }
     }
 
-    // A method that returns book's details.
+    /**
+     * Returns a string representation of the book.
+     *
+     * @return a formatted string containing book details
+     */
     @Override
     public String toString()
     {

@@ -2,6 +2,8 @@ package ca.bcit.comp2522.bookstore;
 
 /**
  * A class representing a person's name.
+ * A name consists of a first and last name, both validated for length and content.
+ * This class implements {@link Printable} to allow formatted display.
  *
  * @author Minsu Kim
  * @author Hali Imanpanah
@@ -9,7 +11,8 @@ package ca.bcit.comp2522.bookstore;
  *
  * @version 1.0
  */
-public class Name implements Printable
+public class Name
+        implements Printable
 {
     private static final int MAXIMUM_NAME_LENGTH = 50;
 
@@ -17,7 +20,8 @@ public class Name implements Printable
     private final String last;
 
     /**
-     * Constructs a new name.
+     * Constructs a new Name object with the specified first and last names.
+     *
      * @param first The person's first name.
      * @param last The person's last name.
      */
@@ -33,6 +37,7 @@ public class Name implements Printable
 
     /**
      * Gets the person's first name.
+     *
      * @return The person's first name.
      */
     public final String getFirst()
@@ -42,6 +47,7 @@ public class Name implements Printable
 
     /**
      * Gets the person's last name.
+     *
      * @return The person's last name.
      */
     public final String getLast()
@@ -83,6 +89,7 @@ public class Name implements Printable
 
     /**
      * Returns the name in the format "First Last".
+     *
      * @return The name in the format "First Last".
      */
     @Override

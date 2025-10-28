@@ -2,6 +2,10 @@ package ca.bcit.comp2522.bookstore;
 
 /**
  * A subclass of {@link Biography} that represents an Autobiography.
+ * An Autobiography is a biography written by the subject themselves,
+ * so the author and the subject are the same person.
+ * This class implements {@link Printable} to allow formatted display.
+ *
  * @author Minsu Kim
  * @author Hali Imanpanah
  * @author Esin Sahutoglu
@@ -12,7 +16,8 @@ public class Autobiography extends Biography
                            implements Printable
 {
     /**
-     * Constructor of Autobiography.
+     * Constructs an Autobiography with the given title, publication year, and author.
+     * The author is also the subject of the autobiography.
      *
      * @param title title of autobiography.
      * @param yearPublished published year of autobiography.
@@ -39,6 +44,7 @@ public class Autobiography extends Biography
 
     /**
      * A method that returns autobiography's details.
+     *
      * @return autobiography's details.
      */
     @Override

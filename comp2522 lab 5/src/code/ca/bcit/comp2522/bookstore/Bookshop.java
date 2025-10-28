@@ -1,13 +1,23 @@
-package ca.bcit.comp2522.bookStore;
+package ca.bcit.comp2522.bookstore;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * This class represents a bookshop.
+ * This class represents a bookshop containing a collection of classic novels.
+ *
+ * Initializes a map of novel titles with their authors and publication years,
+ * then demonstrates iteration, filtering, and sorting operations on the data.
  *
  * @author Minsu Kim
- * @author Esin
- * @author Hali
+ * @author Esin Sahutoglu
+ * @author Hali Imanpanah
  *
  * @version 1.0
  */
@@ -123,11 +133,10 @@ public class Bookshop
         novels.put("Wide Sargasso Sea", new Novel("Wide Sargasso Sea", "Jean Rhys", 1966));
 
         final Set<String> titles;
-        titles = novels.keySet();
-
-        System.out.println("=== Print titles using Iterator ===");
         final Iterator<String> it1;
-        it1 = titles.iterator();
+
+        titles = novels.keySet();
+        it1    = titles.iterator();
 
         while(it1.hasNext())
         {
@@ -168,7 +177,8 @@ public class Bookshop
 
     /**
      * Main method that runs the bookshop.
-     * @param args Command line arguments.
+     *
+     * @param args command-line arguments (not used)
      */
     public static void main(final String[] args)
     {
