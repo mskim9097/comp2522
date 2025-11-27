@@ -1,10 +1,9 @@
-package ca.bcit.comp2522.project;
+package ca.bcit.comp2522.project.wordgame;
 
 /**
  * Represents a country.
  *
  * @author Minsu Kim
- *
  * @version 1.0.0
  */
 public class Country
@@ -122,5 +121,37 @@ public class Country
 
             throw new IllegalArgumentException(sb.toString());
         }
+
+        for (final String fact : facts)
+        {
+            if (fact == null ||
+                fact.isBlank())
+            {
+                throw new IllegalArgumentException(
+                        "Fact cannot be null or blank.");
+            }
+        }
+    }
+
+    /**
+     * Returns a string representation of the country.
+     * @return a string representation of the country
+     */
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb;
+        sb = new StringBuilder();
+
+        sb.append("Country: ").append(name).append("\n");
+        sb.append("Capital: ").append(capitalCityName).append("\n");
+        sb.append("Facts:\n");
+
+        for (final String fact : facts)
+        {
+            sb.append(" - ").append(fact).append("\n");
+        }
+
+        return sb.toString();
     }
 }

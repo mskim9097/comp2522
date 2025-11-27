@@ -1,11 +1,30 @@
 package ca.bcit.comp2522.project;
 
+import ca.bcit.comp2522.project.numbergame.NumberGame;
+import ca.bcit.comp2522.project.wordgame.WordGame;
+import ca.bcit.comp2522.project.wordgame.World;
+import javafx.application.Application;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
+/**
+ * Main class.
+ *
+ * @author Minsu Kim
+ * @version 1.0.0
+ */
 public class Main
 {
+    /**
+     * Drives the program.
+     * @param args command line arguments
+     */
     public static void main(final String[] args)
     {
+        Path wordGameDir = Paths.get("src", "resources", "wordgame");
+
         System.out.println("\n===Welcome to the game!===");
         final Scanner scan;
 
@@ -25,21 +44,22 @@ public class Main
             switch (input)
             {
                 case "W":
-                    System.out.println("Word game.");
+                    World test = new World(wordGameDir);
                     break;
                 case "N":
-                    System.out.println("Number game.");
-                    break;
+                    Application.launch(NumberGame.class, args);
+                    return;
                 case "M":
                     System.out.println("My game.");
                     break;
                 case "Q":
                     System.out.println("Goodbye!");
+                    scan.close();
                     return;
                 default:
                     System.out.println("Invalid choice.\n");
             }
-
         }
+
     }
 }

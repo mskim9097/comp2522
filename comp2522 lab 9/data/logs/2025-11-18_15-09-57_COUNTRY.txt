@@ -1,0 +1,2 @@
+15:10:02 guess=eeeeeeee outcome=matches=0
+15:10:04 guess=iiiiiiii outcome=matches=2
