@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents the world.
+ * Represents the world containing all loaded country data.
  *
  * @author Minsu Kim
  * @version 1.0.0
@@ -34,6 +34,7 @@ public class World
 
     /**
      * Constructor for World.
+     * @param dirPath the directory path containing country data files
      */
     public World(final Path dirPath)
     {
@@ -41,11 +42,11 @@ public class World
 
         this.countries = new HashMap<>();
         loadAllCountries(dirPath);
-        //System.out.println(getCountries().toString());
+        // printAllCountries(); // Debug only
     }
 
     /**
-     * Loads all countries from the specified directory.
+     * Iterates through characters 'a' to 'z' to load corresponding text files.
      * @param dirPath the directory path
      */
     private void loadAllCountries(final Path dirPath)
@@ -66,8 +67,8 @@ public class World
     }
 
     /**
-     * Loads a file into the world.
-     * @param filePath the file path
+     * Reads a single file and parses chunks of lines into Country objects.
+     * @param filePath the file path to read
      */
     private void loadFile(final Path filePath)
     {
@@ -111,8 +112,8 @@ public class World
     }
 
     /**
-     * Loads a country from the specified list of lines.
-     * @param tempCountry the list of Country lines
+     * Parses a block of text lines and creates a Country object.
+     * @param tempCountry the list of lines representing one country
      */
     private void loadCountry(final List<String> tempCountry)
     {
@@ -150,12 +151,12 @@ public class World
     }
 
     /**
-     * Gets the countries in the world.
-     * @return the countries in the world
+     * Gets a copy of the country map.
+     * @return the map of countries
      */
     public Map<String, Country> getCountries()
     {
-        return countries;
+        return new HashMap<>(countries);
     }
 
     /**
@@ -165,7 +166,7 @@ public class World
     private void validatePath(final Path dirPath)
     {
         if(dirPath == null ||
-           !Files.isDirectory(dirPath))
+                !Files.isDirectory(dirPath))
         {
             throw new IllegalArgumentException(
                     "Invalid directory path.");

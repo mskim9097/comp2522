@@ -1,0 +1,22 @@
+Prompts I Used with the AI
+
+I provided the AI with my COMP 2522 game assignment instructions and lecture slides, and asked it to suggest several unique game ideas that could be created using only the topics covered in the course.
+I asked the AI to refactor or review my code to ensure it followed COMP 2522 style guidelines—specifically the use of final and symbolic constants, avoiding magic numbers, and separating declaration from initialization. I also asked whether the symbolic constant names I chose were appropriate.
+I requested help reviewing my Javadoc comments and asked the AI to identify unclear explanations, missing details, or places that needed more precise wording.
+I also asked the AI to review my full project and point out anything inconsistent, confusing, or not aligned with the material taught in COMP 2522.
+When I began writing JUnit tests for MyGameLogic, I asked the AI what kinds of test cases I should include. It provided a helpful list of recommended scenarios, which guided my test implementation.
+I also noticed that the clarity of the answers depended on how I phrased my prompts. To keep the AI within the scope of COMP 2522, I frequently added reminders such as “Use only concepts covered in the course” or “Follow COMP 2522 style only,” which helped prevent unrelated or overly advanced suggestions.
+
+Best Part of Using the AI
+
+One of the best experiences I had with the AI occurred when I attempted to run multiple games from a single Main class. After finishing a round of NumberGame (a JavaFX GUI), I closed the window and tried launching the game again. This caused an exception. I asked the AI why this happened, and it explained that a JavaFX application is normally allowed to start only once per JVM run, so the behavior was expected.
+I asked how I could reopen GUI games multiple times from the menu, and the AI guided me through using Platform.startup, Platform.runLater, Platform.setImplicitExit(false), and a CountDownLatch to wait for each game window to close. This allowed me to relaunch either NumberGame or MyGame safely from the menu without crashing, and it made my Main class much more flexible and reusable.
+
+Another positive experience was when I needed to write JUnit tests but wasn’t sure where to start. Testing is still challenging for me, so I asked the AI what I should include. It provided a clear checklist—such as vaccination logic, invalid coordinate handling, singleton round sharing, and infection-containment win conditions—which helped me complete the test class with confidence.
+A smaller but still meaningful benefit was the speed at which the AI helped me debug. Whenever something behaved unexpectedly, I could describe the issue, and it immediately provided logical explanations or pointed out potential mistakes. This saved me time and kept me focused on improving the game’s design.
+
+Worst Part of Using the AI
+
+One of the challenges of using the AI was checking whether my code aligned with the COMP 2522 lecture material. Even though the assignment requires using only COMP 2522 concepts, the AI sometimes suggested techniques we never learned. I had to filter out those suggestions myself, which was often confusing and slowed down my progress.
+Another issue was that the AI occasionally mixed information between my three games. For example, while I was discussing MyGame, it sometimes answered with details related to WordGame or NumberGame. When I asked many questions in a row, the context occasionally became blurred, and the answers were not always focused or relevant.
+I also noticed that the AI sometimes gave answers that sounded confident but were factually incorrect. Whenever this happened, I had to verify the logic myself before applying any suggestion. Although this slowed my workflow, it also reminded me to use the AI responsibly and confirm everything using my own understanding of the course material.

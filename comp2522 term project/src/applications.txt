@@ -1,0 +1,43 @@
+lesson 1:
+    static initializer in class HealthyCell
+    symbolic constants in interface MyGameConstants
+
+lesson 2:
+    inheritance in classes HealthyCell, ImmuneCell, InfectedCell
+    exception handling in class MyGameLogic (saveResults)
+
+lesson 3:
+    abstract class in class Cell
+    polymorphism in class MyGameLogic (Grid<Cell> storing subclasses)
+
+lesson 4:
+    interface in interface Infectable
+    interface implementation in class HealthyCell
+
+lesson 5:
+    multi-dimensional arrays in class Grid (T[][])
+    multi-dimensional arrays in class MyGame (Rectangle[][])
+
+lesson 6:
+    lambda expressions in class MyGame (e -> handleCellClick)
+
+lesson 7:
+    generics in class Grid<T extends Cell>
+    method references in class MyGameLogic (Arrays::stream)
+
+lesson 9:
+    files and paths in class MyGameLogic (Files.writeString, Path)
+
+lesson 10:
+    streams and filters in class MyGameLogic (Arrays.stream + filter)
+
+lesson 11:
+    GUI layouts in class MyGame (VBox, HBox, GridPane)
+    event handling in class MyGame (setOnMouseClicked)
+
+lesson 12:
+    concurrency in class Main (CountDownLatch)
+    unit tests in class MyGameLogicTest (assertEquals, assertThrows)
+
+lesson 13:
+    singleton pattern in class SimulationManager

@@ -1,0 +1,48 @@
+--- Game Result ---
+The infection can no longer spread.
+You contained the outbreak!
+
+Rounds played: 16
+Vaccines used: 16
+New infections during game: 24
+
+--- Game Result ---
+The infection can no longer spread.
+You contained the outbreak!
+
+Rounds played: 26
+Vaccines used: 26
+New infections during game: 45
+
+--- Game Result ---
+The infection can no longer spread.
+You contained the outbreak!
+
+Rounds played: 33
+Vaccines used: 33
+New infections during game: 34
+
+--- Game Result ---
+The infection can no longer spread.
+You contained the outbreak!
+
+Rounds played: 25
+Vaccines used: 25
+New infections during game: 40
+
+--- Game Result ---
+The infection can no longer spread.
+You contained the outbreak!
+
+Rounds played: 19
+Vaccines used: 19
+New infections during game: 28
+
+--- Game Result ---
+The infection can no longer spread.
+You contained the outbreak!
+
+Rounds played: 26
+Vaccines used: 26
+New infections during game: 27
+

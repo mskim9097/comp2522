@@ -1,212 +1,362 @@
 package ca.bcit.comp2522.project.numbergame;
 
-import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Random;
+import java.util.concurrent.CountDownLatch;
+
 /**
- * GUI-based ascending-number placement game.
- *
- * This class is only the skeleton layout;
- * game logic will be added later.
+ * Represents the main GUI for the Number Game.
+ * Handles user interaction and updates the view based on NumberGameLogic.
+ * Tracks session statistics as per project requirements.
  *
  * @author Minsu Kim
  * @version 1.0.0
  */
-public class NumberGame extends Application
+public class NumberGame implements GameConstants
 {
-    private static final int ROW_COUNT        = 4;
-    private static final int COLUMN_COUNT     = 5;
-    private static final int WINDOW_WIDTH     = 600;
-    private static final int WINDOW_HEIGHT    = 400;
-    private static final int GAP_SIZE         = 10;
-    private static final int PADDING_SIZE     = 15;
+    private static final int    WINDOW_WIDTH         = 600;
+    private static final int    WINDOW_HEIGHT        = 600;
+    private static final int    GAP_SIZE             = 10;
+    private static final int    BUTTON_BOX_GAP       = 20;
+    private static final int    ACTION_BTN_W         = 120;
+    private static final int    INITIAL_INT_VALUE    = 0;
+    private static final int    NON_PLAY_GAME        = 0;
+    private static final double NO_AVERAGE           = 0.0;
 
-    private Label   currentNumberLabel;
-    private Label   statusLabel;
-    private Button  newGameButton;
-    private Button  quitButton;
-    private Button[][] cellButtons;
+    private static final String CSS_PATH = "/numbergame/styles.css";
 
-    @Override
-    public void start(final Stage stage)
+    private final NumberGameLogic logic;
+    private final Button[]        buttons;
+    private final Random          random;
+
+    private int   currentNumber;
+    private Label statusLabel;
+    private int   totalGamesPlayed;
+    private int   totalGamesWon;
+    private int   totalSuccessfulPlacements;
+    private int   currentSuccessfulPlacements;
+
+    private Stage primaryStage;
+
+    /**
+     * Constructor for NumberGame.
+     */
+    public NumberGame()
     {
-        initializeFields();
+        this.logic   = new NumberGameLogic();
+        this.buttons = new Button[TOTAL_SLOTS];
+        this.random  = new Random();
 
-        final BorderPane root;
-        root = createRootLayout();
+        this.totalGamesPlayed            = INITIAL_INT_VALUE;
+        this.totalGamesWon               = INITIAL_INT_VALUE;
+        this.totalSuccessfulPlacements   = INITIAL_INT_VALUE;
+        this.currentSuccessfulPlacements = INITIAL_INT_VALUE;
+    }
 
-        final Scene scene;
+    /**
+     * Opens a new game window and signals the latch when closed.
+     * @param latch the latch to countdown when the window closes
+     */
+    public void openGameWindow(final CountDownLatch latch)
+    {
+        final Stage stage;
+        stage = new Stage();
+        this.primaryStage = stage;
+
+        initStage(stage);
+        stage.setOnHidden(e -> latch.countDown());
+        stage.show();
+        generateNextNumber();
+    }
+
+    /**
+     * Initializes the stage with layout, buttons, and event handlers.
+     * @param primaryStage the stage to initialize
+     */
+    private void initStage(final Stage primaryStage)
+    {
+        final VBox      root;
+        final GridPane  grid;
+        final Scene     scene;
+        final Button    tryAgainBtn;
+        final Button    quitBtn;
+        final HBox      buttonBox;
+
+
+        root = new VBox(GAP_SIZE);
+        root.setAlignment(Pos.CENTER);
+        root.getStyleClass().add("game-root");
+
+        statusLabel = new Label("Welcome to Number Game!");
+        statusLabel.getStyleClass().add("status-label");
+
+        grid = createGrid();
+
+        tryAgainBtn = new Button("Try Again");
+        tryAgainBtn.setPrefWidth(ACTION_BTN_W);
+        tryAgainBtn.getStyleClass().add("try-again-button");
+        tryAgainBtn.setOnAction(e -> resetGame());
+
+        quitBtn = new Button("Quit");
+        quitBtn.setPrefWidth(ACTION_BTN_W);
+        quitBtn.getStyleClass().add("quit-button");
+        quitBtn.setOnAction(e -> showStatsAndQuit());
+
+        buttonBox = new HBox(BUTTON_BOX_GAP);
+        buttonBox.setAlignment(Pos.CENTER);
+        buttonBox.getChildren().addAll(tryAgainBtn, quitBtn);
+
+        root.getChildren().addAll(statusLabel, grid, buttonBox);
+
         scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        stage.setTitle("Number Game");
-        stage.setScene(scene);
-        stage.show();
+
+
+        if (getClass().getResource(CSS_PATH) != null)
+        {
+            scene.getStylesheets().add(
+                    Objects.requireNonNull(
+                                    getClass().getResource(CSS_PATH))
+                            .toExternalForm());
+        }
+        else
+        {
+            System.out.println("CSS file not found at " + CSS_PATH);
+        }
+
+        primaryStage.setTitle("Number Game");
+        primaryStage.setScene(scene);
     }
 
     /**
-     * Initializes fields that depend only on constants.
+     * Creates the grid for the game.
+     * @return the grid
      */
-    private void initializeFields()
-    {
-        cellButtons = new Button[ROW_COUNT][COLUMN_COUNT];
-
-        currentNumberLabel = new Label("Next number: —");
-        statusLabel        = new Label("Click \"New Game\" to begin.");
-
-        newGameButton = new Button("New Game");
-        quitButton    = new Button("Quit");
-
-        // 이벤트 핸들러는 나중에 구현
-        newGameButton.setOnAction(event -> handleNewGame());
-        quitButton.setOnAction(event -> handleQuit());
-    }
-
-    /**
-     * Creates the main BorderPane layout.
-     *
-     * @return configured root layout
-     */
-    private BorderPane createRootLayout()
-    {
-        final BorderPane borderPane;
-        borderPane = new BorderPane();
-
-        final HBox topBar;
-        topBar = createTopBar();
-
-        final VBox centerBox;
-        centerBox = createCenterBox();
-
-        final HBox bottomBar;
-        bottomBar = createBottomBar();
-
-        borderPane.setTop(topBar);
-        borderPane.setCenter(centerBox);
-        borderPane.setBottom(bottomBar);
-
-        return borderPane;
-    }
-
-    /**
-     * Top: 게임 제목 + 현재 숫자 표시.
-     */
-    private HBox createTopBar()
-    {
-        final Label titleLabel;
-        titleLabel = new Label("Number Game – Place numbers in ascending order");
-
-        final VBox textBox;
-        textBox = new VBox();
-        textBox.getChildren().addAll(titleLabel, currentNumberLabel);
-        textBox.setSpacing(5);
-        textBox.setAlignment(Pos.CENTER_LEFT);
-
-        final HBox topBar;
-        topBar = new HBox();
-        topBar.getChildren().add(textBox);
-        topBar.setPadding(new Insets(PADDING_SIZE));
-        topBar.setAlignment(Pos.CENTER_LEFT);
-
-        return topBar;
-    }
-
-    /**
-     * Center: 4x5 버튼 그리드.
-     */
-    private VBox createCenterBox()
+    private GridPane createGrid()
     {
         final GridPane grid;
         grid = new GridPane();
+
         grid.setHgap(GAP_SIZE);
         grid.setVgap(GAP_SIZE);
-        grid.setPadding(new Insets(PADDING_SIZE));
         grid.setAlignment(Pos.CENTER);
 
-        for (int row = 0; row < ROW_COUNT; row++)
+        int buttonIndex = FIRST_INDEX;
+        for (int row = FIRST_INDEX; row < GRID_ROWS; row++)
         {
-            for (int col = 0; col < COLUMN_COUNT; col++)
+            for (int col = FIRST_INDEX; col < GRID_COLS; col++)
             {
-                final Button cellButton;
-                cellButton = new Button("—");
+                final Button btn;
+                final int index;
 
-                cellButton.setPrefWidth(80);
-                cellButton.setPrefHeight(50);
+                btn = new Button("[ ]");
+                btn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+                btn.getStyleClass().add("grid-button");
 
-                final int finalRow;
-                final int finalCol;
-                finalRow = row;
-                finalCol = col;
+                index = buttonIndex;
+                btn.setOnAction(e -> handleButtonClick(index));
 
-                // 나중에 숫자 배치 로직 넣을 자리
-                cellButton.setOnAction(event -> handleCellClick(finalRow, finalCol));
-
-                cellButtons[row][col] = cellButton;
-                grid.add(cellButton, col, row);
+                buttons[index] = btn;
+                grid.add(btn, col, row);
+                buttonIndex++;
             }
         }
-
-        final VBox centerBox;
-        centerBox = new VBox();
-        centerBox.getChildren().add(grid);
-        centerBox.setAlignment(Pos.CENTER);
-
-        return centerBox;
+        return grid;
     }
 
     /**
-     * Bottom: 상태 메시지 + 버튼들.
+     * Handles the button click.
+     * @param index the index of the button
      */
-    private HBox createBottomBar()
+    private void handleButtonClick(final int index)
     {
-        final HBox buttonBox;
-        buttonBox = new HBox();
-        buttonBox.getChildren().addAll(newGameButton, quitButton);
-        buttonBox.setAlignment(Pos.CENTER_LEFT);
-        buttonBox.setSpacing(GAP_SIZE);
+        if (logic.isValidPlacement(currentNumber, index))
+        {
+            logic.setNumberAt(index, currentNumber);
+            buttons[index].setText(String.valueOf(currentNumber));
+            buttons[index].setDisable(true);
 
-        final HBox bottomBar;
-        bottomBar = new HBox();
-        bottomBar.getChildren().addAll(buttonBox, statusLabel);
-        bottomBar.setSpacing(GAP_SIZE);
-        bottomBar.setPadding(new Insets(PADDING_SIZE));
-        bottomBar.setAlignment(Pos.CENTER_LEFT);
+            currentSuccessfulPlacements++;
 
-        HBox.setMargin(statusLabel, new Insets(0, 0, 0, 40));
+            if (logic.isBoardFull())
+            {
+                updateStats(true);
 
-        return bottomBar;
+                statusLabel.setText("You Won! All slots filled.");
+                disableAllButtons();
+                showAlert("Victory",
+                        "Congratulations! You completed the grid.\n\n" +
+                        getStatusMessage());
+                return;
+            }
+
+            generateNextNumber();
+        }
+        else
+        {
+            showAlert("Invalid Move",
+                    "You cannot place " +
+                    currentNumber +
+                    " here.\n" +
+                    "Remember: Ascending order!");
+        }
     }
 
-    // ====== 이벤트 핸들러 (지금은 뼈대만) ======
-
-    private void handleNewGame()
+    /**
+     * Updates game statistics.
+     * @param isWin true if the game was won, false otherwise
+     */
+    private void updateStats(final boolean isWin)
     {
-        // TODO: 배열 초기화, 점수 초기화, 첫 랜덤 숫자 생성 등
-        statusLabel.setText("New game started (logic to be implemented).");
+        totalGamesPlayed++;
+        if (isWin)
+        {
+            totalGamesWon++;
+        }
+        totalSuccessfulPlacements += currentSuccessfulPlacements;
     }
 
-    private void handleQuit()
+    /**
+     * Generates the status message string required by the assignment.
+     * @return formatted status string
+     */
+    private String getStatusMessage()
     {
-        // 여기서는 그냥 창만 닫기
-        final Stage stage;
-        stage = (Stage) statusLabel.getScene().getWindow();
-        stage.close();
-        // Main 메뉴 복귀는 Main 쪽에서 Application.launch 사용 패턴에 맞춰서 설계
+        final int           gamesLost;
+        final double        average;
+        final StringBuilder sb;
+
+        gamesLost = totalGamesPlayed - totalGamesWon;
+        sb        = new StringBuilder();
+
+        if (totalGamesPlayed > NON_PLAY_GAME)
+        {
+            average = (double) totalSuccessfulPlacements / totalGamesPlayed;
+        }
+        else
+        {
+            average = NO_AVERAGE;
+        }
+
+        sb.append("You won ")
+          .append(totalGamesWon)
+          .append(" out of ")
+          .append(totalGamesPlayed)
+          .append(" games and you lost ")
+          .append(gamesLost)
+          .append(" out of ")
+          .append(totalGamesPlayed)
+          .append(" games,\nwith ")
+          .append(totalSuccessfulPlacements)
+          .append(" successful placements, an average of ")
+          .append(String.format("%.1f", average))
+          .append(" per game.");
+
+        return sb.toString();
     }
 
-    private void handleCellClick(final int row,
-                                 final int column)
+    /**
+     * Shows stats and closes the window.
+     */
+    private void showStatsAndQuit()
     {
-        // TODO: 현재 숫자를 해당 칸에 배치 가능한지 검사하고,
-        //       가능하면 버튼 텍스트 변경 + 상태 업데이트
-        System.out.println("Clicked cell (" + row + ", " + column + ")");
+        final Alert alert;
+        final Optional<ButtonType> result;
+
+        alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Goodbye");
+        alert.setHeaderText("Thanks for playing!");
+        alert.setContentText(getStatusMessage());
+
+        result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK)
+        {
+            primaryStage.close();
+        }
+    }
+
+    /**
+     * Resets the game to its initial state.
+     */
+    private void resetGame()
+    {
+        logic.resetBoard();
+
+        for (final Button btn : buttons)
+        {
+            btn.setText("[ ]");
+            btn.setDisable(false);
+        }
+
+        currentSuccessfulPlacements = INITIAL_INT_VALUE;
+
+        statusLabel.setText("Game Restarted!");
+        generateNextNumber();
+    }
+
+    /**
+     * Generates the next unique number.
+     */
+    private void generateNextNumber()
+    {
+        do
+        {
+            currentNumber = random.nextInt(MAX_NUMBER_VALUE) +
+                    MIN_NUMBER_VALUE;
+        }
+        while (logic.isNumberPresent(currentNumber));
+
+        if (!logic.isMovePossible(currentNumber))
+        {
+            updateStats(false);
+
+            statusLabel.setText("Game Over! " + getStatusMessage());
+            disableAllButtons();
+            showAlert("Game Over",
+                    "No valid moves left for number: " +
+                    currentNumber +
+                    "\n\n" +
+                    getStatusMessage());
+            return;
+        }
+        statusLabel.setText("Next Number: " + currentNumber);
+    }
+
+    /**
+     * Disables all buttons.
+     */
+    private void disableAllButtons()
+    {
+        for (final Button btn : buttons)
+        {
+            btn.setDisable(true);
+        }
+    }
+
+    /**
+     * Shows an alert dialog.
+     */
+    private void showAlert(final String title,
+                           final String message)
+    {
+        final Alert alert;
+
+        alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

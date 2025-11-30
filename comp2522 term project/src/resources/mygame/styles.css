@@ -1,0 +1,65 @@
+/* === ROOT CONTAINER === */
+.mygame-root {
+    -fx-background-color: linear-gradient(to bottom, #0f0f0f, #1a0f0f);
+    -fx-padding: 20;
+}
+
+/* === TITLE === */
+.mygame-title {
+    -fx-text-fill: #ff4d4d;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #660000, 10, 0.4, 0, 0);
+}
+
+/* === SUBTITLE === */
+.subtitle-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #bbbbbb;
+    -fx-padding: 0 10 10 10;
+    -fx-alignment: center;
+}
+
+/* === ROUND + STATS === */
+.mygame-round-label, .mygame-stats-label {
+    -fx-text-fill: #aaffaa;
+    -fx-font-family: "Consolas";
+    -fx-font-size: 14px;
+}
+
+/* === GRID CONTAINER === */
+.mygame-grid {
+    -fx-padding: 10;
+    -fx-background-color: rgba(255,0,0,0.05);
+    -fx-background-radius: 8;
+    -fx-border-color: #550000;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+}
+
+/* === RECTANGLES (CELLS) === */
+.mygame-cell-rect {
+    -fx-stroke: #333333;
+    -fx-effect: dropshadow(gaussian, rgba(255,0,0,0.4), 4, 0.4, 0, 0);
+}
+
+/* === BUTTONS === */
+.mygame-button {
+    -fx-background-color: linear-gradient(#7f0000, #b30000); /* Red-ish warning */
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-padding: 8 18;
+    -fx-background-radius: 6;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, #330000, 6, 0.4, 0, 0);
+}
+
+.mygame-button:hover {
+    -fx-background-color: linear-gradient(#b30000, #ff0000);
+}
+
+/* Disabled button, if needed later */
+.mygame-button:disabled {
+    -fx-background-color: #444444;
+    -fx-text-fill: #999999;
+}

@@ -8,10 +8,10 @@ package ca.bcit.comp2522.project.wordgame;
  */
 public class Country
 {
-    private static final int FACT_COUNT  = 3;
     private static final int FIRST_FACT  = 0;
     private static final int SECOND_FACT = 1;
     private static final int THIRD_FACT  = 2;
+    private static final int FACT_COUNT  = 3;
 
     private final String   name;
     private final String   capitalCityName;
@@ -105,7 +105,8 @@ public class Country
     }
 
     /**
-     * Validates the facts. The fact array must contain exactly {@value FACT_COUNT} elements.
+     * Validates the facts.
+     * The fact array must contain exactly {@value FACT_COUNT} elements.
      * @param facts the facts to validate
      */
     private static void validateFacts(final String[] facts)
@@ -143,9 +144,13 @@ public class Country
         final StringBuilder sb;
         sb = new StringBuilder();
 
-        sb.append("Country: ").append(name).append("\n");
-        sb.append("Capital: ").append(capitalCityName).append("\n");
-        sb.append("Facts:\n");
+        sb.append("Country: ")
+          .append(name)
+          .append("\n")
+          .append("Capital: ")
+          .append(capitalCityName)
+          .append("\n")
+          .append("Facts:\n");
 
         for (final String fact : facts)
         {
