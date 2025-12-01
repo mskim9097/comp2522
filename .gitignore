@@ -169,6 +169,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Video files
+*.mp4
+
 ### macOS Patch ###
 # iCloud generated files
 *.icloud

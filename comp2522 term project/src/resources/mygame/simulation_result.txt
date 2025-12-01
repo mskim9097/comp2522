@@ -46,3 +46,11 @@ Rounds played: 26
 Vaccines used: 26
 New infections during game: 27
 
+--- Game Result ---
+You contained the spread,
+but infection reached 51% of the population.
+
+Rounds played: 19
+Vaccines used: 19
+New infections during game: 47
+
