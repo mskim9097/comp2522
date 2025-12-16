@@ -1,31 +1,34 @@
 public class Person
 {
-    private final String first;
+    private final String firstName;
 
-    public Person(final String first)
+    public Person(final String firstName)
     {
-        validateFirst(first);
-        this.first = first;
+        validateFirstName(firstName);
+        this.firstName = firstName;
     }
 
-    public String getFirst()
+    public String getFirstName()
     {
-        return first;
+        return firstName;
     }
 
-    private static void validateFirst(final String first)
+    private static void validateFirstName(final String firstName)
     {
-        if(first == null || first.isBlank())
+        if(firstName == null || firstName.isBlank())
         {
             throw new BadNameException("Invalid first name.");
         }
     }
+}
 
+class Main
+{
     public static void main(final String[] args)
     {
         final Person p1;
-        p1 = new Person("John");
 
-        System.out.println(p1.getFirst());
+        p1 = new Person("John");
+        System.out.println(p1.getFirstName());
     }
 }

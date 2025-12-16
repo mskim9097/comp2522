@@ -1,12 +1,11 @@
 import java.util.Objects;
 
-public class HorrorMovie extends Movie
+class HorrorMovie extends Movie
 {
     private final String scaryCharacter;
 
     HorrorMovie(final String title,
-                final String scaryCharacter)
-            throws InvalidScarer
+                final String scaryCharacter) throws InvalidScarer
     {
         super(title);
         validateScaryCharacter(scaryCharacter);
@@ -16,25 +15,35 @@ public class HorrorMovie extends Movie
     private static void validateScaryCharacter(final String scaryCharacter)
             throws InvalidScarer
     {
-        if (scaryCharacter == null ||
-            scaryCharacter.isBlank())
+        if(scaryCharacter == null)
         {
             throw new InvalidScarer("no");
         }
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof HorrorMovie that)) return false;
-        if (!super.equals(o)) return false;
+    public boolean equals(final Object o)
+    {
+        if(!(o instanceof final HorrorMovie that))
+        {
+            return false;
+        }
+
+        if(!super.equals(o))
+        {
+            return false;
+        }
         return Objects.equals(scaryCharacter, that.scaryCharacter);
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(super.hashCode(), scaryCharacter);
     }
 }
+
+
 
 class InvalidScarer extends Exception
 {
@@ -44,7 +53,8 @@ class InvalidScarer extends Exception
     }
 }
 
-class Main2
+
+class Test
 {
     public static void main(final String[] args)
     {
@@ -59,7 +69,7 @@ class Main2
             System.out.println(m1.getTitle());
             System.out.println(m2.getTitle());
         }
-        catch (InvalidScarer e)
+        catch(final InvalidScarer e)
         {
             System.out.println(e.getMessage());
         }
@@ -67,7 +77,5 @@ class Main2
         {
             System.out.println("goodbye");
         }
-
-
     }
 }

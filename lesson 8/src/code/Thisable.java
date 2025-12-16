@@ -1,27 +1,20 @@
-public interface Thisable
+interface Thisable
 {
     void a();
     void b();
-
-    default void c()
-    {
-        System.out.println("c for thisable");
-    }
+    default void c(){}
 }
 
 interface Thatable
 {
     void d();
-    default void c()
-    {
-        System.out.println("d for thatable");
-    }
+    default void c(){}
 }
 
 class Person
-    implements Thisable,
-               Thatable,
-               Comparable<Person>
+        implements Thisable,
+        Thatable,
+        Comparable<Person>
 {
     private final int yearBorn;
 
@@ -49,14 +42,16 @@ class Person
     }
 
     @Override
-    public int compareTo(final Person o)
-    {
-        return o.yearBorn - yearBorn;
-    }
-
-    @Override
     public void c()
     {
-        System.out.println("c for person");
+        System.out.println("whatever");
+    }
+
+
+
+    @Override
+    public int compareTo(final Person o)
+    {
+        return o.yearBorn - this.yearBorn;
     }
 }

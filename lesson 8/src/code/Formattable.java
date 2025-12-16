@@ -4,15 +4,14 @@ interface Formattable
     String make(String s, int n);
 }
 
-class A
+class Test2
 {
-    static void main(final String[] args)
+    public static void main(final String[] args)
     {
         final Formattable f1;
         final Formattable f2;
 
-
-        f1 = (s, n) -> {
+        f1 = (s, n)->{
             String str;
             str = "";
             for(int i = 0; i < n; i++)
@@ -22,13 +21,14 @@ class A
             return str;
         };
 
-        f2 = (s, n) -> s + n;
+        f2 = (s, n)->s+n;
 
 
         final Formattable f3;
         final Formattable f4;
 
-        f3 = new Format()::repeat;
+        f3 = Test2::repeat;
+        f4 = Test2::join;
     }
 
     static String repeat(final String s, final int n)

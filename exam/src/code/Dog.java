@@ -3,45 +3,36 @@ import java.util.Objects;
 public class Dog
 {
     private final String name;
-    private final int bornYear;
+    private final int yearBorn;
 
-    public Dog(final String name,
-               final int bornYear)
+    public Dog(final String name, final int yearBorn)
     {
         this.name = name;
-        this.bornYear = bornYear;
+        this.yearBorn = yearBorn;
     }
 
     public void display()
     {
-        System.out.println("Dog name: " + name);
-        System.out.println("Dog born year: " + bornYear);
+        System.out.println(name + ", " + yearBorn);
+    }
+}
+
+public class Pug extends Dog
+{
+    private final boolean isBrown;
+
+    public Pug(final String name,
+               final int yearBorn,
+               final boolean isBrown)
+    {
+        super(name, yearBorn);
+        this.isBrown = isBrown;
     }
 
     @Override
-    public boolean equals(final Object o)
+    public void display()
     {
-        if(o == null)
-        {
-            return false;
-        }
-        if(o == this)
-        {
-            return true;
-        }
-        if(!o.getClass().equals(this.getClass()))
-        {
-            return false;
-        }
-
-        final Dog that = (Dog)o;
-
-        return this.name.equals(that.name);
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(name);
+        super.display();
+        System.out.println("is Brown: " + isBrown);
     }
 }

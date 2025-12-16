@@ -17,7 +17,7 @@ class World
         thats[1] = new Person(2020);
         it = more.iterator();
 
-        for(final Thatable that : thats)
+        for(final Thatable that: thats)
         {
             more.add(that);
         }
@@ -28,6 +28,5 @@ class World
             t = it.next();
             t.d();
         }
-
     }
 }
